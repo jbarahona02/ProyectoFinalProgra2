@@ -147,7 +147,7 @@
                         <th>acciones</th>
                     </tr>
                     <tr class="table-dark">
-                        <td>
+                        <td style="text-align: center">
                             <button type="button" class="btn btn-warning ">Seleccionar</button>
                         </td>
                         <td>asdas</td>

@@ -81,7 +81,7 @@
                             <input type="text" class="form-control inputDelLogin" id="inputPassword3">
                         </form>
                         <div class="contenedorDeBoton">
-                            <button type="button" class="btn btn-dark boton">Iniciar sesión</button>
+                            <input type="submit" name="btnIniciarSesion" value="Iniciar sesion" class="btn btn-dark botonAgregar">
                         </div>
                 </div>
             </div>
