@@ -19,13 +19,13 @@
             }
             
             .contenedorLogin {
-                margin-top: 10%;
+                margin-top: 5%;
             }
             
             .fondoDeLogin {
                 background-color: rgba(225,225,225,0.4);
                 width: 465px;
-                height: 307px;
+                height: 380px;
                 margin-top: -40px;
                 border-radius: 50px;
             }
@@ -41,6 +41,12 @@
                 margin-top: 28px;
             }
             
+            .etiquetaDeInput {
+                text-align: left;
+                margin-left: 50px;
+                font-size: 19px;
+            }
+            
             .inputDelLogin {
                 width: 80%;
                 height: 34px;
@@ -54,14 +60,14 @@
                 margin-top: 26px;
             }
             
-            .boton {
-                background-color: #223D62;
+            .botonAgregar {
+                background-color: #223d62;
                 padding-left: 30px;
                 padding-right: 30px;
             }
             
-            .boton:hover {
-                background-color: #223D62 !important;
+            .botonAgregar:hover {
+                background-color: #223d62 !important;
             }
             
         </style>
@@ -75,14 +81,24 @@
 
                 <div class="fondoDeLogin">
                         <h1 class="titulo"> Iniciar Sesión </h1>
-                        <form class="formulario">
-                            <input type="text" class="form-control inputDelLogin" id="inputPassword3">
-                            </br>
-                            <input type="text" class="form-control inputDelLogin" id="inputPassword3">
+                        <form class="formulario" action="ControladorInicioSesion" method="POST">
+                            <div class="etiquetaDeInput">
+                                <label class="form-label">Correo: </label>
+                            </div>
+                            <div>
+                                <input type="text" name="txtCorreo" class="form-control inputDelLogin">
+                            </div>
+                            <br>  
+                            <div class="etiquetaDeInput">
+                                <label class="form-label">Contraseña: </label>
+                            </div>
+                            <div>
+                                <input type="text" name="txtContrasenia" class="form-control inputDelLogin">
+                            </div>
+                            <div class="contenedorDeBoton">
+                                <input type="submit" name="btnIniciarSesion" value="Ingresar" class="btn btn-dark botonAgregar">
+                            </div>
                         </form>
-                        <div class="contenedorDeBoton">
-                            <input type="submit" name="btnIniciarSesion" value="Iniciar sesion" class="btn btn-dark botonAgregar">
-                        </div>
                 </div>
             </div>
         </center>
