@@ -58,7 +58,7 @@ public class ControladorInicioSesion extends HttpServlet {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         } else if (accion.equals("Registrarse")) {
-            request.getRequestDispatcher("RegistrarPage.jsp").forward(request, response);
+            request.getRequestDispatcher("Registrar.jsp").forward(request, response);
         }
         
 
