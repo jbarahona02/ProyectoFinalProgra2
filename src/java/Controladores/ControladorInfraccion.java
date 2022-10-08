@@ -56,7 +56,7 @@ public class ControladorInfraccion extends HttpServlet {
                     sancionesEnSession = new ArrayList<>();
                     sancionesEnSession.add(sancion);
                     request.getSession().setAttribute(listSanciones, sancionesEnSession);
-                    request.getRequestDispatcher("Infraccion.jsp?Vehiculo=" + vehiculoId + "&Agente="+agenteId+"&AddSancion=1").forward(request, response);
+                    request.getRequestDispatcher("Infracciones.jsp?Vehiculo=" + vehiculoId + "&Agente="+agenteId+"&AddSancion=1").forward(request, response);
                 } else {
                  Map<Integer, String> values = new HashMap<>();
                  for (Sancion item: sancionesEnSession) {
@@ -64,10 +64,10 @@ public class ControladorInfraccion extends HttpServlet {
                  }
                  
                  if (values.containsKey(sancion.getId())) {
-                     request.getRequestDispatcher("Infraccion.jsp?Vehiculo=" + vehiculoId + "&Agente="+agenteId+"&AddSancion=1").forward(request, response); 
+                     request.getRequestDispatcher("Infracciones.jsp?Vehiculo=" + vehiculoId + "&Agente="+agenteId+"&AddSancion=1").forward(request, response); 
                  } else {
                      sancionesEnSession.add(sancion);
-                     request.getRequestDispatcher("Infraccion.jsp?Vehiculo=" + vehiculoId + "&Agente="+agenteId+"&AddSancion=1").forward(request, response); 
+                     request.getRequestDispatcher("Infracciones.jsp?Vehiculo=" + vehiculoId + "&Agente="+agenteId+"&AddSancion=1").forward(request, response); 
                  }
                  
                 }
@@ -77,7 +77,7 @@ public class ControladorInfraccion extends HttpServlet {
         if (accion.equals("Agregar")) {
             List<Sancion> sancionesEnSession = (ArrayList<Sancion>) request.getSession().getAttribute(listSanciones);
             if (sancionesEnSession == null || agenteId == null || agenteId == 0 || vehiculoId == null || vehiculoId == 0  ) {
-                request.getRequestDispatcher("Infraccion.jsp?Vehiculo=" + vehiculoId + "&Agente="+agenteId).forward(request, response); 
+                request.getRequestDispatcher("Infracciones.jsp?Vehiculo=" + vehiculoId + "&Agente="+agenteId).forward(request, response); 
             } else {
                 Double total = 0.0;
                 List<Integer> sancionesId = new ArrayList<>();
@@ -87,7 +87,7 @@ public class ControladorInfraccion extends HttpServlet {
                  }
                 infraccionDAO.createInfraccion(total, agenteId, vehiculoId, sancionesId);
                 request.getSession().setAttribute(listSanciones, null);
-                request.getRequestDispatcher("Infraccion.jsp").forward(request, response);
+                request.getRequestDispatcher("Infracciones.jsp").forward(request, response);
             }
             
         }
@@ -96,7 +96,7 @@ public class ControladorInfraccion extends HttpServlet {
             Integer id = Integer.valueOf(request.getParameter("registro"));
             infraccionDAO.deleteInfraccion(id);
             request.getSession().setAttribute(listSanciones, null);
-            request.getRequestDispatcher("Infraccion.jsp").forward(request, response);
+            request.getRequestDispatcher("Infracciones.jsp").forward(request, response);
         }
         
         if (accion.equals("Seleccionar")) {
@@ -104,7 +104,7 @@ public class ControladorInfraccion extends HttpServlet {
             Infraccion infraccion = infraccionDAO.getInfraccion(id);
             if (infraccion != null) {
                  request.getSession().setAttribute("infraccion", infraccion);
-                 request.getRequestDispatcher("Infraccion.jsp?Vehiculo=" + infraccion.getVehiculo() + "&Agente="+infraccion.getAgente()+"&id="+infraccion.getId()).forward(request, response); 
+                 request.getRequestDispatcher("Infracciones.jsp?Vehiculo=" + infraccion.getVehiculo() + "&Agente="+infraccion.getAgente()+"&id="+infraccion.getId()).forward(request, response); 
             }
         }
         
@@ -114,11 +114,11 @@ public class ControladorInfraccion extends HttpServlet {
             infraccionDAO.eliminarInfraccionDetallePorId(idDetalle);
             Infraccion infraccion = infraccionDAO.getInfraccion(id);
             request.getSession().setAttribute("infraccion", infraccion);
-            request.getRequestDispatcher("Infraccion.jsp?Vehiculo=" + infraccion.getVehiculo() + "&Agente="+infraccion.getAgente()+"&id="+infraccion.getId()).forward(request, response);
+            request.getRequestDispatcher("Infracciones.jsp?Vehiculo=" + infraccion.getVehiculo() + "&Agente="+infraccion.getAgente()+"&id="+infraccion.getId()).forward(request, response);
         }
         
         if (accion.equals("Limpiar")) {
-            request.getRequestDispatcher("Infraccion.jsp?Vehiculo=0&Agente=0").forward(request, response);
+            request.getRequestDispatcher("Infracciones.jsp?Vehiculo=0&Agente=0").forward(request, response);
         }
         
         if (accion.equals("Actualizar")) {
@@ -137,7 +137,7 @@ public class ControladorInfraccion extends HttpServlet {
             infraccionDAO.updateInfraccion(id, total, agenteId, vehiculoId, sancionesId);
             Infraccion infraccion = infraccionDAO.getInfraccion(id);
             request.getSession().setAttribute("infraccion", infraccion);
-            request.getRequestDispatcher("Infraccion.jsp?Vehiculo=" + infraccion.getVehiculo() + "&Agente="+infraccion.getAgente()+"&id="+infraccion.getId()).forward(request, response);
+            request.getRequestDispatcher("Infracciones.jsp?Vehiculo=" + infraccion.getVehiculo() + "&Agente="+infraccion.getAgente()+"&id="+infraccion.getId()).forward(request, response);
         }
         
         try (PrintWriter out = response.getWriter()) {
