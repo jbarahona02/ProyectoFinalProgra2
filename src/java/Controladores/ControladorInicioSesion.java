@@ -48,14 +48,16 @@ public class ControladorInicioSesion extends HttpServlet {
 
             if(usuarioIngresado.getEmail() != null){
                 request.setAttribute("usuario", usuarioIngresado);
-                request.getRequestDispatcher("ControladorMenuPrincipal?menu=Principal").forward(request, response);
+                
+                if(usuarioIngresado.getAgente() != 0){
+                    request.getRequestDispatcher("ControladorMenuPrincipal?menu=PrincipalAgente").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("ControladorMenuConductor?menu=Principal").forward(request, response);
+                }
             }  else {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
-        }
-        
-        
-        if (accion.equals("Registrarse")) {
+        } else if (accion.equals("Registrarse")) {
             request.getRequestDispatcher("RegistrarPage.jsp").forward(request, response);
         }
         

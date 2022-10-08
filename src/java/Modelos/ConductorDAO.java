@@ -10,7 +10,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
  * @author joseb
@@ -83,6 +84,32 @@ public class ConductorDAO {
             System.out.println(e.getMessage());
             return 0;
         }
+    }
+    
+    public List<Conductor> listarConductores(){
+        String sql = "SELECT * FROM conductor";
+        ArrayList<Conductor> listaConductores = new ArrayList<Conductor>();
+        
+        try {
+            cn = conexionDB.getConexion();
+            ps = cn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                Conductor conductor = new Conductor();
+                conductor.setId(rs.getInt("id"));
+                conductor.setLicencia(rs.getString("licencia"));
+                conductor.setNombres(rs.getString("nombres"));
+                conductor.setApellidos(rs.getString("apellidos"));
+                conductor.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
+                
+                listaConductores.add(conductor);
+            }
+        } catch (Exception ex){
+            
+        }
+        
+        return listaConductores;
     }
     
 }
