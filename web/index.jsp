@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login</title>
+        <title>Inicio de Sesión</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
         <style>
             body {
@@ -77,6 +77,10 @@
                 background-color: #223d62 !important;
             }
             
+            .botonRegistro:hover {
+                background-color: #223d62 !important;
+            }
+            
         </style>
     </head>
     <body>
@@ -100,7 +104,7 @@
                                 <label class="form-label">Contraseña: </label>
                             </div>
                             <div>
-                                <input type="text" name="txtContrasenia" class="form-control inputDelLogin">
+                                <input type="password" name="txtContrasenia" class="form-control inputDelLogin">
                             </div>
                             <div class="contenedorDeBoton">
                                 <input type="submit" name="btnIniciarSesion" value="Ingresar" class="btn btn-dark botonAgregar">

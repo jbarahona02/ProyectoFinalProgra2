@@ -12,9 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import Modelos.Usuario;
 import Modelos.UsuarioDAO;
-import java.util.List;
+import Modelos.Conductor;
+import Modelos.ConductorDAO;
 
 /**
  *
@@ -35,6 +37,7 @@ public class ControladorMenuPrincipal extends HttpServlet {
     
     Usuario usuario = new Usuario();
     UsuarioDAO usuarioDAO = new UsuarioDAO();
+    ConductorDAO conductorDAO = new ConductorDAO();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -43,8 +46,18 @@ public class ControladorMenuPrincipal extends HttpServlet {
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");
         
-        if(menu.equals("Principal")){
-            request.getRequestDispatcher("MenuPrincipal.jsp").forward(request, response);
+        if(menu.equals("PrincipalAgente")){
+            request.getRequestDispatcher("MenuAgente.jsp?menu=Principal").forward(request, response);
+        }
+        
+        if(menu.equals("PrincipalConductor")){
+            request.getRequestDispatcher("MenuConductor.jsp").forward(request, response);
+        }
+        
+        if(menu.equals("Conductores")){
+            List<Conductor> listaConductores = conductorDAO.listarConductores();
+            request.setAttribute("conductores",listaConductores);
+            request.getRequestDispatcher("Conductores.jsp").forward(request, response);
         }
         
         try (PrintWriter out = response.getWriter()) {
