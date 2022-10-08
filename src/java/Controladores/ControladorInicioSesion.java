@@ -54,6 +54,13 @@ public class ControladorInicioSesion extends HttpServlet {
             }
         }
         
+        
+        if (accion.equals("Registrarse")) {
+            request.getRequestDispatcher("RegistrarPage.jsp").forward(request, response);
+        }
+        
+
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
