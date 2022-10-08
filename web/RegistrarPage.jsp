@@ -1,15 +1,17 @@
 <%-- 
-    Document   : Login
-    Created on : 30/09/2022, 08:40:43 PM
-    Author     : Admin
+    Document   : RegistrarPage
+    Created on : Oct 7, 2022, 8:50:31 AM
+    Author     : joseb
 --%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login</title>
+        <title>Registro</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
         <style>
             body {
@@ -25,7 +27,7 @@
             .fondoDeLogin {
                 background-color: rgba(225,225,225,0.4);
                 width: 465px;
-                height: 380px;
+                height: 500px;
                 margin-top: -40px;
                 border-radius: 50px;
             }
@@ -33,6 +35,20 @@
             .titulo {
                 font-weight: bold;
                 font-size: 200%;
+                text-align: center;
+                padding-top: 57px;
+            }
+            
+            .titulo-sin-padding {
+                font-weight: bold;
+                font-size: 200%;
+                text-align: center;
+            }
+            
+            .tituloWaring {
+                font-weight: bold;
+                color: red;
+                font-size: 100%;
                 text-align: center;
                 padding-top: 57px;
             }
@@ -87,8 +103,18 @@
                 </div>
 
                 <div class="fondoDeLogin">
-                        <h1 class="titulo"> Iniciar Sesión </h1>
-                        <form class="formulario" action="ControladorInicioSesion" method="POST">
+                            
+                        <% 
+                          String email = request.getParameter("emailRepetido");
+                          if (email != "") {
+                              out.println("<h1 class=" + "tituloWaring" + "> Correo electronico ya existe en el sistema </h1>");
+                              out.println("<h1 class=" + "titulo-sin-padding" + "> REGISTRARSE </h1>");
+                          } else {
+                              out.println("<h1 class=" + "titulo" + "> REGISTRARSE </h1>");
+                          }
+                        %>
+                              
+                        <form class="formulario" action="ControladorRegistro" method="POST">
                             <div class="etiquetaDeInput">
                                 <label class="form-label">Correo: </label>
                             </div>
@@ -102,9 +128,20 @@
                             <div>
                                 <input type="text" name="txtContrasenia" class="form-control inputDelLogin">
                             </div>
+                            <br>
+                            <div class="etiquetaDeInput">
+                                <label class="form-label">Tipo de usuario: </label>
+                            </div>
+                            <div>
+                                <select name="Tipo" id="tipoUsuario" class="form-control inputDelLogin">
+                                    <option value="1">Conductor</option>
+                                    <option value="2">Agente</option>
+                                 </select>
+                            </div>
+                            
                             <div class="contenedorDeBoton">
-                                <input type="submit" name="btnIniciarSesion" value="Ingresar" class="btn btn-dark botonAgregar">
-                                <input type="submit" name="btnIniciarSesion" value="Registrarse" class="btn btn-dark botonRegistro">
+                                 <input type="submit" name="btnAccion" value="Regresar" class="btn btn-dark botonRegistro">
+                                <input type="submit" name="btnAccion" value="Crear cuenta" class="btn btn-dark botonRegistro">
                             </div>
                         </form>
                 </div>

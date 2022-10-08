@@ -66,6 +66,13 @@
                 padding-right: 30px;
             }
             
+            .botonRegistro {
+                background-color: #223d62;
+                padding-left: 30px;
+                padding-right: 30px;
+                margin-left: 30px;
+            }
+            
             .botonAgregar:hover {
                 background-color: #223d62 !important;
             }
@@ -97,6 +104,7 @@
                             </div>
                             <div class="contenedorDeBoton">
                                 <input type="submit" name="btnIniciarSesion" value="Ingresar" class="btn btn-dark botonAgregar">
+                                <input type="submit" name="btnIniciarSesion" value="Registrarse" class="btn btn-dark botonRegistro">
                             </div>
                         </form>
                 </div>
