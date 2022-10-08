@@ -45,11 +45,11 @@ public class ControladorRegistro extends HttpServlet {
         if (accion.equals("Crear cuenta")) {
             usuarioIngresado = usuarioDAO.validarUsuarioConEmail(email);
             if (usuarioIngresado.getEmail() != null && usuarioIngresado.getEmail().trim() != "") {
-                 request.getRequestDispatcher("RegistrarPage.jsp?emailRepetido="+usuarioIngresado.getEmail()).forward(request, response);
+                 request.getRequestDispatcher("Registrar.jsp?emailRepetido="+usuarioIngresado.getEmail()).forward(request, response);
             } else if (email != null && email != "" && password != "" && password != null) {
-                request.getRequestDispatcher("CompleteRegistro.jsp").forward(request, response);
+                request.getRequestDispatcher("CompletarRegistro.jsp").forward(request, response);
             } else {
-                request.getRequestDispatcher("RegistrarPage.jsp").forward(request, response);
+                request.getRequestDispatcher("Registrar.jsp").forward(request, response);
             }
         }
        
@@ -73,13 +73,13 @@ public class ControladorRegistro extends HttpServlet {
                     (telefono != null ||  telefono.trim() != "");
             
             if (!valida) {
-               request.getRequestDispatcher("CompleteRegistro.jsp?Tipo="+tipo+"&txtCorreo="+email+"&txtContrasenia="+password).forward(request, response);
+               request.getRequestDispatcher("CompletarRegistro.jsp?Tipo="+tipo+"&txtCorreo="+email+"&txtContrasenia="+password).forward(request, response);
             }
             
             if (tipo.equals("1")) {
                 error = conductorDAO.validarLicencia(licenciaOrDpi);
                 if (error != "") {
-                    request.getRequestDispatcher("CompleteRegistro.jsp?Tipo="+tipo+"&txtCorreo="+email+"&txtContrasenia="+password+"&licenciaRepetida=" + error).forward(request, response);
+                    request.getRequestDispatcher("CompletarRegistro.jsp?Tipo="+tipo+"&txtCorreo="+email+"&txtContrasenia="+password+"&licenciaRepetida=" + error).forward(request, response);
                 }
                 
                 int resp = conductorDAO.crearConductor(licenciaOrDpi, nombres, apellidos, fecha, telefono);
@@ -92,7 +92,7 @@ public class ControladorRegistro extends HttpServlet {
             } else {
                 error = agenteDAO.validarDpi(licenciaOrDpi);
                 if (error != "") {
-                    request.getRequestDispatcher("CompleteRegistro.jsp?Tipo="+tipo+"&txtCorreo="+email+"&txtContrasenia="+password+"&dpiRepetido=" +error).forward(request, response);
+                    request.getRequestDispatcher("CompletarRegistro.jsp?Tipo="+tipo+"&txtCorreo="+email+"&txtContrasenia="+password+"&dpiRepetido=" +error).forward(request, response);
                 }
                 int resp = agenteDAO.crearAgente(nombres, apellidos, licenciaOrDpi, fecha, telefono);
                 if (resp == 1) {
