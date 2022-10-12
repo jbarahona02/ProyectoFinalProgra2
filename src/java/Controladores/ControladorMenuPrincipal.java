@@ -47,7 +47,7 @@ public class ControladorMenuPrincipal extends HttpServlet {
         String accion = request.getParameter("accion");
         
         if(menu.equals("PrincipalAgente")){
-            request.getRequestDispatcher("MenuAgente.jsp?menu=Principal").forward(request, response);
+            request.getRequestDispatcher("MenuAgente.jsp").forward(request, response);
         }
         
         if(menu.equals("PrincipalConductor")){
@@ -55,8 +55,10 @@ public class ControladorMenuPrincipal extends HttpServlet {
         }
         
         if(menu.equals("Conductores")){
+ 
             List<Conductor> listaConductores = conductorDAO.listarConductores();
             request.setAttribute("conductores",listaConductores);
+                
             request.getRequestDispatcher("Conductores.jsp").forward(request, response);
         }
         
