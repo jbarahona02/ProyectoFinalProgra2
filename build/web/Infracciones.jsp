@@ -92,7 +92,6 @@
             
             .botones {
                 width: 90px;
-                margin: 5px;
             }
         </style>
     </head>
