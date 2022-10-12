@@ -106,7 +106,7 @@
                             
                         <% 
                           String email = request.getParameter("emailRepetido");
-                          if (email != "") {
+                          if (email != null && !email.equals("")) {
                               out.println("<h1 class=" + "tituloWaring" + "> Correo electronico ya existe en el sistema </h1>");
                               out.println("<h1 class=" + "titulo-sin-padding" + "> REGISTRARSE </h1>");
                           } else {
