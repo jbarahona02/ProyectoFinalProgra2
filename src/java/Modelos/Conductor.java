@@ -16,68 +16,66 @@ public class Conductor {
     private String licencia;
     private String nombres;
     private String apellidos;
+    private String telefono;
     private Date fechaNacimiento;
-    String telefono;
-
+    
     public Conductor() {
     }
 
-    public Conductor(int id, String licencia, String nombres, String apellidos, Date fechaNacimiento, String telefono) {
+    public Conductor(int id, String licencia, String nombres, String apellidos, String telefono, Date fechaNacimiento) {
         this.id = id;
         this.licencia = licencia;
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getLicencia() {
         return licencia;
-    }
-
-    public void setLicencia(String licencia) {
-        this.licencia = licencia;
     }
 
     public String getNombres() {
         return nombres;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
     public String getApellidos() {
         return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
     }
 
     public String getTelefono() {
         return telefono;
     }
 
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLicencia(String licencia) {
+        this.licencia = licencia;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    
-    
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    } 
 }

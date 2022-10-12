@@ -11,40 +11,90 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Menú Principal</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <style>
+            body {
+                margin: 0;
+                padding-top: 30px;
+                padding-bottom: 30px;
+                background-color: #2ECCFA;
+            }
+
+            .titulo {
+                font-weight: bold;
+                text-align: center;
+                padding: 5px;
+            }
+
+            .elementosDeMenu {
+                text-align: center;
+                margin-right: 5px;
+            }
+
+            .contenedor {
+                display: flex;
+                justify-content: center;
+                margin-top: 35px;
+            }
+
+            .contenedorImagenes {
+                height: 530px;
+                width: 750px;
+            }
+
+            .imagen {
+                height: 530px;
+                width: 750px;
+            }
+
+            .estiloDeDropDown {
+                background-color: #00BDFF;
+                border: 1px solid #00BDFF;
+                margin-right: 16px;
+                color: black;
+            }
+
+            .estiloDeDropDown:hover {
+                background-color: #00BDFF !important;
+                border: 1px solid #00BDFF !important;
+                margin-right: 16px;
+                color: black !important;
+            }
+
+        </style>
     </head>
     <body>
-        <h1>Menú Principal</h1>
-        <nav class="navbar navbar-expand-lg bg-dark">
+        <h1 class="titulo">Sistema de infracción vehicular</h1>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Navbar</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Dropdown link
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <div class="collapse navbar-collapse menuDeOpciones">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Usuario">Usuario</a>
+                        </li>
+                        <li class="nav-item elementosDeMenu">
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Vehiculo">Vehículo</a>
+                        </li>
+                        <li class="nav-item elementosDeMenu">
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Infracciones">Infracciones</a>
+                        </li>
+                        <li class="nav-item elementosDeMenu">
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Pagos">Pagos</a>
+                        </li>
                     </ul>
-                  </li>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle estiloDeDropDown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    ${usuario.getEmail()}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                    <form action="ControladorInicioSesion" method="POST">
+                        <button name="btnCerrarSesion" value="Salir" class="dropdown-item">Cerrar sesión</button>
+                    </form>
                 </ul>
-              </div>
             </div>
         </nav>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     </body>
 </html>

@@ -38,8 +38,8 @@ public class ControladorInicioSesion extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String accion = request.getParameter("btnIniciarSesion");
-        
+        String accion = request.getParameter("btnIniciarSesion") != null ? request.getParameter("btnIniciarSesion") : request.getParameter("btnCerrarSesion");
+      
         if (accion.equals("Ingresar")){
             String email = request.getParameter("txtCorreo");
             String contrasenia = request.getParameter("txtContrasenia");
@@ -52,13 +52,15 @@ public class ControladorInicioSesion extends HttpServlet {
                 if(usuarioIngresado.getAgente() != 0){
                     request.getRequestDispatcher("ControladorMenuPrincipal?menu=PrincipalAgente").forward(request, response);
                 } else {
-                    request.getRequestDispatcher("ControladorMenuConductor?menu=Principal").forward(request, response);
+                    request.getRequestDispatcher("ControladorMenuPrincipal?menu=PrincipalConductor").forward(request, response);
                 }
             }  else {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         } else if (accion.equals("Registrarse")) {
             request.getRequestDispatcher("Registrar.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
         
 
