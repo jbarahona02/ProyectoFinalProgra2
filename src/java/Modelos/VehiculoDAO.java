@@ -48,5 +48,29 @@ public class VehiculoDAO {
             return null;
         }
     }
+    
+    public Vehiculo obtenerVehiculoPorId(int id){
+        Vehiculo vehiculo = new Vehiculo();
+        String sql = "SELECT * FROM vehiculo where id = ?";
+        try {
+            cn = conexionDB.getConexion();
+            ps = cn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
 
+            while (rs.next()) {
+                vehiculo.setId(rs.getInt("id"));
+                vehiculo.setPlaca(rs.getString("placa"));
+                vehiculo.setColor(rs.getString("color"));
+                vehiculo.setLinea(rs.getString("linea"));
+                vehiculo.setMarca(rs.getString("marca"));
+                vehiculo.setConductor(rs.getInt("conductor"));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return vehiculo;
+    }
 }

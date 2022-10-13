@@ -268,4 +268,33 @@ public class InfraccionDAO {
         }
     }
     
+    public List<Infraccion> infraccionesPorConductor(String conductorId) {
+        String sql = "SELECT * FROM infraccion INNER JOIN vehiculo ON vehiculo.id = infraccion.vehiculo "
+                + "INNER JOIN conductor ON conductor.id = vehiculo.conductor "
+                + "WHERE conductor.id = ?";
+        ArrayList<Infraccion> listaInfracciones = new ArrayList<Infraccion>();
+
+        try {
+            cn = conexionDB.getConexion();
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, conductorId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Infraccion infraccion = new Infraccion();
+                infraccion.setId(rs.getInt("id"));
+                infraccion.setFechaCreacion(rs.getDate("fecha_creacion"));
+                infraccion.setEstado(rs.getBoolean("estado"));
+                infraccion.setTotal(rs.getDouble("total"));
+                infraccion.setAgente(rs.getInt("agente"));
+                infraccion.setVehiculo(rs.getInt("vehiculo"));
+                
+                listaInfracciones.add(infraccion);
+            }
+        } catch (Exception ex) {
+
+        }
+
+        return listaInfracciones;
+    }
 }
