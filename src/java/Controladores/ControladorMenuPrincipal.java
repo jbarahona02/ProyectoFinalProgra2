@@ -34,40 +34,39 @@ public class ControladorMenuPrincipal extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     Usuario usuario = new Usuario();
     UsuarioDAO usuarioDAO = new UsuarioDAO();
     ConductorDAO conductorDAO = new ConductorDAO();
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");
-        
-        if(menu.equals("PrincipalAgente")){
+
+        if (menu.equals("PrincipalAgente")) {
             request.getRequestDispatcher("MenuAgente.jsp").forward(request, response);
         }
-        
-        if(menu.equals("PrincipalConductor")){
+
+        if (menu.equals("PrincipalConductor")) {
             request.getRequestDispatcher("MenuConductor.jsp").forward(request, response);
         }
-        
-        if(menu.equals("Conductores")){
- 
+
+        if (menu.equals("Conductores")) {
+
             List<Conductor> listaConductores = conductorDAO.listarConductores();
-            request.setAttribute("conductores",listaConductores);
-                
+            request.setAttribute("conductores", listaConductores);
+
             request.getRequestDispatcher("Conductores.jsp").forward(request, response);
         }
-        
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorMenuPrincipal</title>");            
+            out.println("<title>Servlet ControladorMenuPrincipal</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ControladorMenuPrincipal at " + request.getContextPath() + "</h1>");

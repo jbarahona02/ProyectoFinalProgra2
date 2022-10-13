@@ -40,7 +40,7 @@ public class ControladorUsuario extends HttpServlet {
         int id =  (request.getParameter("txtId") != null && !request.getParameter("txtId").equals("")) ? Integer.valueOf(request.getParameter("txtId")) : 0;
 
         if (accion.equals("Seleccionar")) {
-            Usuario usuario = usuarioDAO.getUsuario(registro);
+            Usuario usuario = usuarioDAO.buscarUsuario(registro);
             request.setAttribute("usuario", usuario);
             request.getRequestDispatcher("Usuarios.jsp").forward(request, response);
         }
@@ -58,8 +58,8 @@ public class ControladorUsuario extends HttpServlet {
                 }
 
                 
-                usuarioDAO.updateUsuario(txtEmail, id);
-                Usuario usuario = usuarioDAO.getUsuario(id);
+                usuarioDAO.actualizarUsuario(txtEmail, id);
+                Usuario usuario = usuarioDAO.buscarUsuario(id);
                 request.setAttribute("usuario", usuario);
                 request.getRequestDispatcher("Usuarios.jsp").forward(request, response);
                 return;
@@ -70,7 +70,7 @@ public class ControladorUsuario extends HttpServlet {
         }
         
         if (accion.equals("Eliminar")) {
-             String error = usuarioDAO.deleteUsuario(registro);
+             String error = usuarioDAO.eliminarUsuario(registro);
              request.getRequestDispatcher("Usuarios.jsp?errorEliminar="+error).forward(request, response);
         }
         

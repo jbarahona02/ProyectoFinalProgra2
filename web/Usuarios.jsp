@@ -145,7 +145,8 @@
         <h1>Usuarios</h1>
         <div class="contenedorFormulario">
             <div class="contenidoFormulario">
-                <%                    String error = request.getParameter("error");
+                <%                   
+                    String error = request.getParameter("error");
                     String errorEliminar = request.getParameter("errorEliminar");
 
                     if (error != null) {
@@ -246,7 +247,7 @@
                     <tbody>
                         <%
                             UsuarioDAO usuarioDAO = new UsuarioDAO();
-                            List<Usuario> usuarios = usuarioDAO.getUsers();
+                            List<Usuario> usuarios = usuarioDAO.listarUsuarios();
                             if (!usuarios.isEmpty()) {
                                 out.println("<form action=" + "'ControladorUsuario'" + "method=" + "'POST'" + ">");
                                 for (Usuario item : usuarios) {
