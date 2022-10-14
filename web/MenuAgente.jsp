@@ -1,7 +1,7 @@
 <%-- 
     Document   : MenuAgente
     Created on : 7/10/2022, 06:32:07 PM
-    Author     : Admin
+    Author     : Javier Barahona
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -73,7 +73,7 @@
                             <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Agentes">Agentes</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Usuarios">Usuarios</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Usuarios" target="usuariosFrame">Usuarios</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
                             <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Vehiculos">Vehículos</a>

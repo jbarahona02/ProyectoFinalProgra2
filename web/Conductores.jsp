@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Conductores</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
         <style>
             body {
@@ -216,7 +216,7 @@
 
         <div class="contenedorTabla">
             <div class="informacionDeTabla">
-                <table class="table table-striped-columns">
+                <table class="table table-striped-columns" style="text-align: center">
                     <thead>
                         <tr class="table-dark" style="text-align: center">
                             <th>ID</th>

@@ -297,4 +297,22 @@ public class InfraccionDAO {
 
         return listaInfracciones;
     }
+    
+    public int actualizarInfraccionPorPagoRealizado(int infraccionId){
+        String sql = "UPDATE infraccion set estado= ? where id=?";
+        
+        try {
+            cn = conexionDB.getConexion();
+            ps = cn.prepareStatement(sql);
+            ps.setBoolean(1,true);
+            ps.setInt(2, infraccionId);
+            
+            ps.executeUpdate();
+            
+            return 1;
+        } catch(Exception ex){
+            return 0;
+        }
+    }
+    
 }
