@@ -56,7 +56,6 @@ public class ConductorDAO {
                 conductor.setLicencia(rs.getString("licencia"));
             }
 
-            System.out.println(conductor.getLicencia());
             if (conductor.getLicencia() == null) {
                 return "";
             }

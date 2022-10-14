@@ -17,6 +17,8 @@ import Modelos.Usuario;
 import Modelos.UsuarioDAO;
 import Modelos.Conductor;
 import Modelos.ConductorDAO;
+import Modelos.Pago;
+import Modelos.PagoDAO;
 
 /**
  *
@@ -38,6 +40,7 @@ public class ControladorMenuPrincipal extends HttpServlet {
     Usuario usuario = new Usuario();
     UsuarioDAO usuarioDAO = new UsuarioDAO();
     ConductorDAO conductorDAO = new ConductorDAO();
+    PagoDAO pagoDAO = new PagoDAO();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -45,6 +48,7 @@ public class ControladorMenuPrincipal extends HttpServlet {
         
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");
+        String conductorId = request.getParameter("conductorId");
         
         if(menu.equals("PrincipalAgente")){
             request.getRequestDispatcher("MenuAgente.jsp").forward(request, response);
@@ -54,12 +58,30 @@ public class ControladorMenuPrincipal extends HttpServlet {
             request.getRequestDispatcher("MenuConductor.jsp").forward(request, response);
         }
         
+        if (menu.equals("Usuarios")) {
+            request.getRequestDispatcher("Usuarios.jsp").forward(request, response);
+        }
+        
         if(menu.equals("Conductores")){
  
             List<Conductor> listaConductores = conductorDAO.listarConductores();
             request.setAttribute("conductores",listaConductores);
                 
             request.getRequestDispatcher("Conductores.jsp").forward(request, response);
+        }
+        
+        if(menu.equals("Pagos")){
+            List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(conductorId);
+            request.setAttribute("conductorId",conductorId);
+            request.setAttribute("pagos",listaPagos);
+                
+            request.getRequestDispatcher("Pagos.jsp").forward(request, response);
+        }
+        
+        if (menu.equals("Infracciones")) {
+            request.getSession().setAttribute("sanciones-infraccion", null);
+            request.getSession().setAttribute("infraccion", null);
+            request.getRequestDispatcher("Infracciones.jsp").forward(request, response);
         }
         
         try (PrintWriter out = response.getWriter()) {
