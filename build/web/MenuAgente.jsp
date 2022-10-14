@@ -85,7 +85,7 @@
                             <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Sanciones">Sanciones</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Infracciones">Infracciones</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Infracciones" target="infraccionesFrame">Infracciones</a>
                         </li>
                     </ul>
                 </div>

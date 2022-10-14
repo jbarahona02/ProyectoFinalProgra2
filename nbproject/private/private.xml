@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/Documentos%202022/UMG%205190/Cuarto%20Semestre/Programación%202/Proyecto%20final/Creacion%20de%20proyecto/ProyectoFinalProgra2/src/java/Controladores/ControladorInfraccion.java</file>
             <file>file:/D:/Documentos%202022/UMG%205190/Cuarto%20Semestre/Programación%202/Proyecto%20final/Creacion%20de%20proyecto/ProyectoFinalProgra2/src/java/Controladores/ControladorPago.java</file>
             <file>file:/D:/Documentos%202022/UMG%205190/Cuarto%20Semestre/Programación%202/Proyecto%20final/Creacion%20de%20proyecto/ProyectoFinalProgra2/src/java/Configuracion/Conexion.java</file>
@@ -24,6 +25,14 @@
             <file>file:/D:/Documentos%202022/UMG%205190/Cuarto%20Semestre/Programación%202/Proyecto%20final/Creacion%20de%20proyecto/ProyectoFinalProgra2/src/java/Controladores/ControladorMenuPrincipal.java</file>
             <file>file:/D:/Documentos%202022/UMG%205190/Cuarto%20Semestre/Programación%202/Proyecto%20final/Creacion%20de%20proyecto/ProyectoFinalProgra2/web/index.jsp</file>
             <file>file:/D:/Documentos%202022/UMG%205190/Cuarto%20Semestre/Programación%202/Proyecto%20final/Creacion%20de%20proyecto/ProyectoFinalProgra2/src/java/Controladores/ControladorConductor.java</file>
+=======
+            <file>file:/C:/Users/joseb/Documents/U/ProyectoFinalProgra2/web/Usuarios.jsp</file>
+            <file>file:/C:/Users/joseb/Documents/U/ProyectoFinalProgra2/src/java/Modelos/SancionDAO.java</file>
+            <file>file:/C:/Users/joseb/Documents/U/ProyectoFinalProgra2/web/Infracciones.jsp</file>
+            <file>file:/C:/Users/joseb/Documents/U/ProyectoFinalProgra2/web/MenuAgente.jsp</file>
+            <file>file:/C:/Users/joseb/Documents/U/ProyectoFinalProgra2/src/java/Controladores/ControladorInfraccion.java</file>
+            <file>file:/C:/Users/joseb/Documents/U/ProyectoFinalProgra2/src/java/Modelos/Sancion.java</file>
+>>>>>>> 437062234dfaa847a255f14dfa912a29d742f388
         </group>
     </open-files>
 </project-private>

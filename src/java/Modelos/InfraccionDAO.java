@@ -66,7 +66,7 @@ public class InfraccionDAO {
         }
     }
     
-    public List<Infraccion> getInfracciones() {
+    public List<Infraccion> listarInfracciones() {
         List<Infraccion> result = new ArrayList<>();
         String sql = "SELECT *FROM infraccion";
         try {
@@ -92,7 +92,7 @@ public class InfraccionDAO {
         }
     }
     
-    public Infraccion getInfraccion(int id) {
+    public Infraccion buscarInfraccion(int id) {
         Infraccion infraccion = new Infraccion();
         String sql = "SELECT *FROM infraccion where id = ?";
         try {
@@ -108,7 +108,7 @@ public class InfraccionDAO {
                 infraccion.setTotal(rs.getDouble("total"));
                 infraccion.setAgente(rs.getInt("agente"));
                 infraccion.setVehiculo(rs.getInt("vehiculo"));
-                infraccion.setDetalle(getInfraccionDetallePorInfraccion(infraccion.getId()));
+                infraccion.setDetalle(buscarInfraccionDetallePorInfraccion(infraccion.getId()));
             }
             
             return infraccion;
@@ -118,7 +118,7 @@ public class InfraccionDAO {
         }
     }
     
-    public int updateInfraccion(int id, Double total, int agente, int vehiculo, List<Integer> sanciones) {
+    public int actualizarInfraccion(int id, Double total, int agente, int vehiculo, List<Integer> sanciones) {
         String sql = "";
         if (sanciones.isEmpty()) {
             sql = "UPDATE infraccion SET agente = ?, vehiculo = ? where id = ?";
@@ -144,7 +144,7 @@ public class InfraccionDAO {
             
             ps.executeUpdate();
             
-            List<InfraccionDetalle> detalle = getInfraccionDetallePorInfraccion(id);
+            List<InfraccionDetalle> detalle = buscarInfraccionDetallePorInfraccion(id);
             List<Integer> sancionesDetalle = new ArrayList<>();
             Map<Integer, Integer> mapDetalle = new HashMap<>();
             List<Integer> sancionesDetalleNuevas = new ArrayList<>();
@@ -173,7 +173,7 @@ public class InfraccionDAO {
         }
     }
     
-    public void deleteInfraccion(int id) {
+    public void eliminarInfraccion(int id) {
         String sql = "DELETE FROM infraccion WHERE id = ?";
         try {
             eliminarInfraccionDetallePorInfraccoin(id);
@@ -244,7 +244,7 @@ public class InfraccionDAO {
         }
     }
     
-     public List<InfraccionDetalle> getInfraccionDetallePorInfraccion(int infraccion) {
+     public List<InfraccionDetalle> buscarInfraccionDetallePorInfraccion(int infraccion) {
         String sql = "SELECT *FROM infraccion_detalle where infraccion = ?";
         List<InfraccionDetalle> result = new ArrayList<>();
         try {

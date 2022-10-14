@@ -76,7 +76,7 @@ public class ControladorPago extends HttpServlet {
                 return;
             }
 
-            Infraccion infraccion = infraccionDAO.getInfraccion(Integer.valueOf(infraccionId));
+            Infraccion infraccion = infraccionDAO.buscarInfraccion(Integer.valueOf(infraccionId));
             String diaCreacionDeInfraccion = infraccion.getFechaCreacion().toString().split("-")[2];
 
             if (Integer.valueOf(fechaDePago.split("-")[2]) >= Integer.valueOf(diaCreacionDeInfraccion)

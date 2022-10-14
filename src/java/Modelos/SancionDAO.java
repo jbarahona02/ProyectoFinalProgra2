@@ -46,7 +46,7 @@ public class SancionDAO {
         }
     }
     
-    public Sancion getSancion(int id) {
+    public Sancion buscarSancion(int id) {
         Sancion sancion = new Sancion();
         String query = "SELECT *FROM sancion where id = ?";
         try {
