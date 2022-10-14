@@ -1,7 +1,7 @@
 <%-- 
     Document   : MenuPrincipal
     Created on : 6/10/2022, 10:21:25 PM
-    Author     : Admin
+    Author     : Javier Barahona
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -78,7 +78,7 @@
                             <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Infracciones">Infracciones</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Pagos">Pagos</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Pagos&conductorId=${usuario.getConductor()}" target="pagosFrame">Pagos</a>
                         </li>
                     </ul>
                 </div>
@@ -95,6 +95,9 @@
             </div>
         </nav>
 
+        <div style="height: 550px">
+            <iframe name="pagosFrame" style="width: 100%; height: 100%; border:none"></iframe>
+        </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     </body>
 </html>

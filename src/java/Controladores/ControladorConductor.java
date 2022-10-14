@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  *
- * @author Admin
+ * @author Javier Barahona
  */
 @WebServlet(name = "ControladorConductor", urlPatterns = {"/ControladorConductor"})
 public class ControladorConductor extends HttpServlet {

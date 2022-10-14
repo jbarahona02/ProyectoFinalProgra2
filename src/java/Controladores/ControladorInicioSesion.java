@@ -50,9 +50,9 @@ public class ControladorInicioSesion extends HttpServlet {
                 request.setAttribute("usuario", usuarioIngresado);
                 
                 if(usuarioIngresado.getAgente() != 0){
-                    request.getRequestDispatcher("ControladorMenuPrincipal?menu=PrincipalAgente").forward(request, response);
+                    request.getRequestDispatcher("ControladorMenuPrincipal?menu=PrincipalAgente&conductorId="+String.valueOf(usuarioIngresado.getAgente())).forward(request, response);
                 } else {
-                    request.getRequestDispatcher("ControladorMenuPrincipal?menu=PrincipalConductor").forward(request, response);
+                    request.getRequestDispatcher("ControladorMenuPrincipal?menu=PrincipalConductor&conductorId="+String.valueOf(usuarioIngresado.getConductor())).forward(request, response);
                 }
             }  else {
                 request.getRequestDispatcher("index.jsp").forward(request, response);

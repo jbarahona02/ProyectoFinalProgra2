@@ -111,7 +111,7 @@ public class UsuarioDAO {
         }
     }
     
-    public List<Usuario> getUsers() {
+    public List<Usuario> listarUsuarios() {
         List<Usuario> result = new ArrayList<>();
         String sql = "SELECT *FROM usuario";
         try {
@@ -136,7 +136,7 @@ public class UsuarioDAO {
         }
     }
     
-    public Usuario getUsuario(int id) {
+    public Usuario buscarUsuario(int id) {
         Usuario usuario = new Usuario();
         String sql = "SELECT *FROM usuario where id = ?";
         try {
@@ -159,7 +159,7 @@ public class UsuarioDAO {
         }
     }
     
-    public int updateUsuario(String email, int id) {
+    public int actualizarUsuario(String email, int id) {
         String sql = "UPDATE usuario SET email = ? WHERE id = ?";
         try {
             connection = conexionDB.getConexion();
@@ -202,12 +202,12 @@ public class UsuarioDAO {
         }
     }
     
-    public String deleteUsuario(int id) {
+    public String eliminarUsuario(int id) {
         String sql = "DELETE FROM usuario WHERE id = ?";
         try {
             int type = 0;
             int idValida = 0;
-            Usuario u = this.getUsuario(id);
+            Usuario u = this.buscarUsuario(id);
             if (u != null) {
                 type = u.getConductor() != 0 ? 1 : 2;
                 idValida = type == 1 ? u.getConductor() : u.getAgente();
