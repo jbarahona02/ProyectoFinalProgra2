@@ -111,7 +111,7 @@ public class ConductorDAO {
                 listaConductores.add(conductor);
             }
         } catch (Exception ex) {
-
+            System.err.println(ex.getMessage());
         }
 
         return listaConductores;
@@ -136,7 +136,7 @@ public class ConductorDAO {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
         
         return conductor;
@@ -160,6 +160,7 @@ public class ConductorDAO {
             
             return 1;
         } catch(Exception ex){
+            System.err.println(ex.getMessage());
             return 0;
         }
     }
@@ -173,7 +174,7 @@ public class ConductorDAO {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (Exception ex){
-            
+            System.err.println(ex.getMessage());
         }
     }
 }

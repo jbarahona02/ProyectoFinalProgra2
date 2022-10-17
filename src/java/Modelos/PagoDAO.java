@@ -23,7 +23,7 @@ public class PagoDAO {
     PreparedStatement preparedStatement;
     ResultSet resultSet;
     
-    public List<Pago> listarPagosDelConductor(String idCondutor) {
+    public List<Pago> listarPagosDelConductor(int idCondutor) {
         String sql = "SELECT * FROM pago INNER JOIN infraccion ON infraccion.id = pago.infraccion "
                 + "INNER JOIN vehiculo ON vehiculo.id = infraccion.vehiculo "
                 + "INNER JOIN conductor ON conductor.id = vehiculo.conductor "
@@ -33,7 +33,7 @@ public class PagoDAO {
         try {
             connection = conexionDB.getConexion();
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, idCondutor);
+            preparedStatement.setInt(1, idCondutor);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -42,12 +42,12 @@ public class PagoDAO {
                 pago.setMonto(resultSet.getDouble("monto"));
                 pago.setFechaDePago(resultSet.getDate("fecha_pago"));
                 pago.setInfraccionId(resultSet.getInt("infraccion"));
-               
+                System.out.println(pago.getMonto());
 
                 listaPagos.add(pago);
             }
         } catch (Exception ex) {
-
+            System.err.println(ex.getMessage());
         }
 
         return listaPagos;
@@ -98,7 +98,7 @@ public class PagoDAO {
             
             return "";
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return "Error";
         }
     }
@@ -115,7 +115,7 @@ public class PagoDAO {
 
             return 1;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return 0;
         }
     }
@@ -133,6 +133,7 @@ public class PagoDAO {
             
             return 1;
         } catch(Exception ex){
+            System.err.println(ex.getMessage());
             return 0;
         }
     }
@@ -146,7 +147,7 @@ public class PagoDAO {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (Exception ex){
-            
+            System.err.println(ex.getMessage());
         }
     }
 }
