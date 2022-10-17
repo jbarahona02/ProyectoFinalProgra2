@@ -70,7 +70,7 @@ public class ControladorMenuPrincipal extends HttpServlet {
         }
 
         if(menu.equals("Pagos")){
-            List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(conductorId);
+            List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(Integer.parseInt(conductorId));
             request.setAttribute("conductorId",conductorId);
             request.setAttribute("pagos",listaPagos);
                 

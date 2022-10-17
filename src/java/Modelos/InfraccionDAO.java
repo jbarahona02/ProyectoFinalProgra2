@@ -268,7 +268,7 @@ public class InfraccionDAO {
         }
     }
     
-    public List<Infraccion> infraccionesPorConductor(String conductorId) {
+    public List<Infraccion> infraccionesPorConductor(int conductorId) {
         String sql = "SELECT * FROM infraccion INNER JOIN vehiculo ON vehiculo.id = infraccion.vehiculo "
                 + "INNER JOIN conductor ON conductor.id = vehiculo.conductor "
                 + "WHERE conductor.id = ?";
@@ -277,7 +277,7 @@ public class InfraccionDAO {
         try {
             cn = conexionDB.getConexion();
             ps = cn.prepareStatement(sql);
-            ps.setString(1, conductorId);
+            ps.setInt(1, conductorId);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -292,7 +292,7 @@ public class InfraccionDAO {
                 listaInfracciones.add(infraccion);
             }
         } catch (Exception ex) {
-
+            System.err.println(ex.getMessage());
         }
 
         return listaInfracciones;
@@ -311,8 +311,26 @@ public class InfraccionDAO {
             
             return 1;
         } catch(Exception ex){
+            System.err.println(ex.getMessage());
             return 0;
         }
     }
     
+    public int actualizarInfraccionPorPagoEliminado(int infraccionId){
+        String sql = "UPDATE infraccion set estado= ? where id=?";
+        
+        try {
+            cn = conexionDB.getConexion();
+            ps = cn.prepareStatement(sql);
+            ps.setBoolean(1,false);
+            ps.setInt(2, infraccionId);
+            
+            ps.executeUpdate();
+            
+            return 1;
+        } catch(Exception ex){
+            System.err.println(ex.getMessage());
+            return 0;
+        }
+    }
 }

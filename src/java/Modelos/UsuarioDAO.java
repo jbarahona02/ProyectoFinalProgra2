@@ -24,8 +24,6 @@ public class UsuarioDAO {
         Usuario usuarioIngresado = new Usuario();
         String consultaSql = "select * from usuario where email = ? and contrasenia = ?";
         
-        System.out.println("email " + email);
-        
         try {
             connection = conexionDB.getConexion();
             preparedStatement = connection.prepareStatement(consultaSql);
@@ -41,7 +39,8 @@ public class UsuarioDAO {
                 usuarioIngresado.setAgente(resultadoSentencia.getInt("agente"));
                 usuarioIngresado.setConductor(resultadoSentencia.getInt("conductor"));
             }
-        } catch(Exception ex){       
+        } catch(Exception ex){ 
+            System.err.println(ex.getMessage());
         }
         
         return usuarioIngresado;

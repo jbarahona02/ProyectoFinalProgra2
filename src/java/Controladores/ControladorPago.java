@@ -46,22 +46,23 @@ public class ControladorPago extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String accion = request.getParameter("accion");
-        String conductorId = request.getParameter("txtConductorId");
-        request.setAttribute("conductorId", conductorId);
        
         
         if (accion.equals("Realizar pago")) {
+       
             String monto = request.getParameter("txtMonto");
             String fechaDePago = request.getParameter("txtFechaPago");
             String infraccionId = request.getParameter("cmbInfraccion");
-
+            String conductorId = request.getParameter("txtConductorId");
+            request.setAttribute("conductorId", conductorId);
+            System.out.println("id * "+ infraccionId);
             String error = "";
             boolean valida = (monto != null && !monto.trim().equals(""))
                     && (fechaDePago != null && !fechaDePago.trim().equals(""))
                     && (infraccionId != null && !infraccionId.trim().equals(""));
 
             if (!valida) {
-                List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(conductorId);
+                List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(Integer.parseInt(conductorId));
                 request.setAttribute("pagos", listaPagos);
 
                 request.getRequestDispatcher("Pagos.jsp?monto=" + monto + "&fechaPago=" + fechaDePago + "&infraccionId=" + infraccionId + "&error=campos").forward(request, response);
@@ -70,7 +71,7 @@ public class ControladorPago extends HttpServlet {
 
             error = pagoDAO.validarQuePagoNoExista(Integer.parseInt(infraccionId));
             if (error != "") {
-                List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(conductorId);
+                List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(Integer.parseInt(conductorId));
                 request.setAttribute("pagos", listaPagos);
                 request.getRequestDispatcher("Pagos.jsp?monto=" + monto + "&fechaPago=" + fechaDePago + "&infraccionId=" + infraccionId + "&error=PagoExistente").forward(request, response);
                 return;
@@ -81,7 +82,7 @@ public class ControladorPago extends HttpServlet {
 
             if (Integer.valueOf(fechaDePago.split("-")[2]) >= Integer.valueOf(diaCreacionDeInfraccion)
                     && Integer.valueOf(fechaDePago.split("-")[2]) <= (Integer.valueOf(diaCreacionDeInfraccion) + 4)) {
-                List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(conductorId);
+                List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(Integer.parseInt(conductorId));
                 request.setAttribute("pagos", listaPagos);
 
                 if (Double.parseDouble(monto) == (infraccion.getTotal() / 2)) {
@@ -92,14 +93,14 @@ public class ControladorPago extends HttpServlet {
                     int respuesta1 = infraccionDAO.actualizarInfraccionPorPagoRealizado(Integer.parseInt(infraccionId));
                     int respuesta2 = pagoDAO.crearPago(pago);
                     
-                    listaPagos = pagoDAO.listarPagosDelConductor(conductorId);
+                    listaPagos = pagoDAO.listarPagosDelConductor(Integer.parseInt(conductorId));
                     request.setAttribute("pagos", listaPagos);
                     request.getRequestDispatcher("Pagos.jsp").forward(request, response);
                 } else {
                     request.getRequestDispatcher("Pagos.jsp?monto=" + monto + "&fechaPago=" + fechaDePago + "&infraccionId=" + infraccionId + "&mensaje=Descuento").forward(request, response);
                 }
             } else {
-                List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(conductorId);
+                List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(Integer.parseInt(conductorId));
                 request.setAttribute("pagos", listaPagos);
                 if (Double.parseDouble(monto) == infraccion.getTotal()) {
                     pago.setMonto(Double.parseDouble(monto));
@@ -110,7 +111,7 @@ public class ControladorPago extends HttpServlet {
                     int respuesta1 = infraccionDAO.actualizarInfraccionPorPagoRealizado(Integer.parseInt(infraccionId));
                     int respuesta2 = pagoDAO.crearPago(pago);
                     
-                    listaPagos = pagoDAO.listarPagosDelConductor(conductorId);
+                    listaPagos = pagoDAO.listarPagosDelConductor(Integer.parseInt(conductorId));
                     request.setAttribute("pagos", listaPagos);
                     request.getRequestDispatcher("Pagos.jsp").forward(request, response);
                 } else {
@@ -118,11 +119,24 @@ public class ControladorPago extends HttpServlet {
                 }
             }
 
+        } else if (accion.equals("Seleccionar")){
+            Pago pagoSeleccionado = pagoDAO.obtenerPagoPorId(Integer.valueOf(request.getParameter("id")));
+            request.setAttribute("pago", pagoSeleccionado);
+            String conductorId = request.getParameter("conductorId");
+            request.setAttribute("conductorId", conductorId);
+            
+            List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(Integer.parseInt(conductorId));
+            request.setAttribute("pagos", listaPagos);
+            request.getRequestDispatcher("Pagos.jsp").forward(request, response);
         } else if(accion.equals("Eliminar")){
+            String conductorId = request.getParameter("conductorId");
+            request.setAttribute("conductorId", conductorId);
             int id = Integer.parseInt(request.getParameter("id"));
+            int infraccionId = Integer.parseInt(request.getParameter("infraccionIdE"));
             pagoDAO.eliminarPago(id);
+            infraccionDAO.actualizarInfraccionPorPagoEliminado(infraccionId);
          
-            List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(conductorId);
+            List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(Integer.parseInt(conductorId));
             request.setAttribute("pagos", listaPagos);
             request.getRequestDispatcher("Pagos.jsp").forward(request, response);
         }

@@ -171,6 +171,8 @@
                 %>
                 <p>Ingrese la información solicitada para registrar un pago : </p>
                 <form action="ControladorPago" method="POST">
+                    <input type="hidden" name="txtId" value="${pago.getId()}">    
+                    <input type="hidden" name="txtConductorId" value="${conductorId}"> 
                     <div>
                         <div class="row filaParaInput">
                             <div class="col-2 col-form-label etiquetaDeInput">
@@ -196,32 +198,29 @@
                             <div class="col-6" style="width: 432px">
                                 <select name="cmbInfraccion" value="<%=infraccionId%>"  id="cmbInfraction" class="form-control">
                                     <%
+                                        int idInfraccion = infraccionId.equals("") ? 0 : Integer.parseInt(infraccionId); 
                                         if (infraccionId.equals("0") || infraccionId.equals("")) {
                                             out.println("<option value=0>Seleccione una infracción</option>");
-                                        } else {
-                                            Infraccion infraccion = new Infraccion();
-                                            infraccion = infraccionDAO.getInfraccion(Integer.valueOf(infraccionId));
-                                            out.println("<option value=" + infraccion.getId() + ">" + infraccion.getId() + " - placa de vehículo "
-                                                    + vehiculoDAO.obtenerVehiculoPorId(infraccion.getVehiculo()).getPlaca() + " - " + "Q" + infraccion.getTotal() + "</option>");
-
                                         }
-
-                                        List<Infraccion> infracciones = infraccionDAO.infraccionesPorConductor(request.getAttribute("conductorId").toString());
+                                        
+                                        List<Infraccion> infracciones = infraccionDAO.infraccionesPorConductor(Integer.parseInt(request.getAttribute("conductorId").toString()));
                                         for (Infraccion infraccion : infracciones) {
-                                            out.println("<option value=" + infraccion.getId() + ">" + infraccion.getId() + " - Placa de vehículo: "
+                                            if(infraccion.getId() == idInfraccion){
+                                                out.println("<option value=" + infraccion.getId() + " selected='selected'>" + infraccion.getId() + " - Placa de vehículo: "
                                                     + vehiculoDAO.obtenerVehiculoPorId(infraccion.getVehiculo()).getPlaca() + " - " + "Q" + infraccion.getTotal() + "</option>");
+                                            } else {
+                                                out.println("<option value=" + infraccion.getId() + ">" + infraccion.getId() + " - Placa de vehículo: "
+                                                    + vehiculoDAO.obtenerVehiculoPorId(infraccion.getVehiculo()).getPlaca() + " - " + "Q" + infraccion.getTotal() + "</option>");
+                                            }
+                                            
                                         }
                                     %>
                                 </select>
                             </div>
                         </div>
                     </div>    
-
-                    <input type="hidden" name="txtId" value="${pago.getId()}">    
-                    <input type="hidden" name="txtConductorId" value="${conductorId}"> 
                     <div class="contenedorBotonAgregar">
                         <input type="submit" name="accion" value="Realizar pago" class="btn btn-dark botonAgregar">
-                        <input type="submit" name="accion" value="Actualizar" class="btn btn-dark botonAgregar" style="margin-left: 10px;">
                     </div>
                 </form>
             </div>
@@ -249,8 +248,8 @@
                                 <td>${pago.getInfraccionId()}</td>
                                 <td class="columnaDeBotones">
                                     <div class="d-grid gap-2 d-md-block contenedorBotones">
-                                        <a class="btn btn-warning estiloEnlace" href="ControladorPago?accion=Seleccionar&id=${pago.getId()}">Seleccionar</a>
-                                        <a class="btn btn-danger botones estiloEnlace2" href="ControladorPago?accion=Eliminar&id=${pago.getId()}&txtConductorId=${conductorId}">Eliminar</a>
+                                        <a class="btn btn-warning estiloEnlace" href="ControladorPago?accion=Seleccionar&id=${pago.getId()}&conductorId=${conductorId}">Seleccionar</a>
+                                        <a class="btn btn-danger botones estiloEnlace2" href="ControladorPago?accion=Eliminar&id=${pago.getId()}&conductorId=${conductorId}&infraccionIdE=${pago.getInfraccionId()}">Eliminar</a>
                                     </div>
                                 </td>
                             </tr>
