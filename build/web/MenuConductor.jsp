@@ -80,7 +80,7 @@
                             <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" onClick="newSite('ControladorMenuPrincipal?menu=Vehiculos')">Vehículo</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" onClick="newSite('ControladorMenuPrincipal?menu=Infracciones')">Infracciones</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" onClick="newSite('ControladorMenuPrincipal?menu=Infracciones&conductorId=${usuario.getConductor()}')">Infracciones</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
                             <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" onClick="newSite('ControladorMenuPrincipal?menu=Pagos&conductorId=${usuario.getConductor()}')">Pagos</a>

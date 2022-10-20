@@ -80,6 +80,13 @@ public class ControladorMenuPrincipal extends HttpServlet {
         if (menu.equals("Infracciones")) {
             request.getSession().setAttribute("sanciones-infraccion", null);
             request.getSession().setAttribute("infraccion", null);
+            request.getSession().setAttribute("conductor", null);
+            
+            String conductor = request.getParameter("conductorId");
+            if (conductor != null) {
+                request.getSession().setAttribute("conductor", conductor);
+            }
+            
             request.getRequestDispatcher("Infracciones.jsp").forward(request, response);
         }
         
