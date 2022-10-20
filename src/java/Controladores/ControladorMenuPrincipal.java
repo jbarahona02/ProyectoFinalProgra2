@@ -5,6 +5,8 @@
  */
 package Controladores;
 
+import Modelos.Agente;
+import Modelos.AgenteDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,12 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import Modelos.Usuario;
-import Modelos.UsuarioDAO;
-import Modelos.Conductor;
-import Modelos.ConductorDAO;
-import Modelos.Pago;
-import Modelos.PagoDAO;
+import Modelos.*;
 
 /**
  *
@@ -40,6 +37,9 @@ public class ControladorMenuPrincipal extends HttpServlet {
     UsuarioDAO usuarioDAO = new UsuarioDAO();
     ConductorDAO conductorDAO = new ConductorDAO();
     PagoDAO pagoDAO = new PagoDAO();
+    VehiculoDAO vehiculoDAO = new VehiculoDAO();
+    AgenteDAO agenteDAO = new AgenteDAO();
+    SancionDAO sancionDAO = new SancionDAO();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -48,6 +48,7 @@ public class ControladorMenuPrincipal extends HttpServlet {
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");
         String conductorId = request.getParameter("conductorId");
+        String vehiculoId = request.getParameter("vehiculoId");
         
         if(menu.equals("PrincipalAgente")){
             request.getRequestDispatcher("MenuAgente.jsp").forward(request, response);
@@ -56,7 +57,6 @@ public class ControladorMenuPrincipal extends HttpServlet {
         if (menu.equals("PrincipalConductor")) {
             request.getRequestDispatcher("MenuConductor.jsp").forward(request, response);
         }
-
         
         if (menu.equals("Usuarios")) {
             request.getRequestDispatcher("Usuarios.jsp").forward(request, response);
@@ -81,6 +81,30 @@ public class ControladorMenuPrincipal extends HttpServlet {
             request.getSession().setAttribute("sanciones-infraccion", null);
             request.getSession().setAttribute("infraccion", null);
             request.getRequestDispatcher("Infracciones.jsp").forward(request, response);
+        }
+        
+        if (menu.equals("Vehiculos")) {
+            List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
+            request.setAttribute("vehiculos", listaVehiculos);
+            request.setAttribute("usuario", usuario);
+                
+            request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
+        }
+        
+        if (menu.equals("Agentes")) {
+            List<Agente> listaAgentes = agenteDAO.buscarAgentes();
+            request.setAttribute("agentes", listaAgentes);
+            request.setAttribute("usuario", usuario);
+                
+            request.getRequestDispatcher("Agentes.jsp").forward(request, response);
+        }
+        
+        if (menu.equals("Sanciones")) {
+            List<Sancion> listaSanciones = sancionDAO.buscarSanciones();
+            request.setAttribute("sanciones", listaSanciones);
+            request.setAttribute("usuario", usuario);
+                
+            request.getRequestDispatcher("Sancion.jsp").forward(request, response);
         }
         
         try (PrintWriter out = response.getWriter()) {

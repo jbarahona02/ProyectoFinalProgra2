@@ -106,7 +106,7 @@ public class ControladorInfraccion extends HttpServlet {
             Integer id = Integer.valueOf(request.getParameter("registro"));
             Infraccion infraccion = infraccionDAO.buscarInfraccion(id);
             SancionDAO sancionDAO = new SancionDAO();
-            List<Sancion> sanciones = sancionDAO.listSancion();
+            List<Sancion> sanciones = sancionDAO.buscarSanciones();
             
             if (infraccion != null) {
                 for (InfraccionDetalle item: infraccion.getDetalle()) {

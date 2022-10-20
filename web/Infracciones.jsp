@@ -133,7 +133,7 @@
                                     <%
 
                                         SancionDAO sancionDAO = new SancionDAO();
-                                        List<Sancion> sanciones = sancionDAO.listSancion();
+                                        List<Sancion> sanciones = sancionDAO.buscarSanciones();
                                         for (Sancion sancion : sanciones) {
                                             out.println("<option value=" + sancion.getId() + ">" + sancion.getDescripcion() + " - " + "Q" + sancion.getAmount() + "</option>");
                                         }
@@ -160,7 +160,7 @@
                                     <option value="0" disabled> Seleccione un agente</option>
                                     <%
                                         AgenteDAO agenteDAO = new AgenteDAO();
-                                        List<Agente> agentes = agenteDAO.listAgentes();
+                                        List<Agente> agentes = agenteDAO.buscarAgentes();
                                         String selectedEmpty = (agenteId == 0) ? "selected" : "";
                                         out.println("<option value='0'" + selectedEmpty + ">Seleccione un vehiculo</option>");
                                         for (Agente agente : agentes) {
@@ -181,7 +181,7 @@
                                 <select name="Vehiculo"  id="cmbVehiculo" class="form-control">
                                     <%
                                         VehiculoDAO vehiculoDAO = new VehiculoDAO();
-                                        List<Vehiculo> vehiculos = vehiculoDAO.listVehiculos();
+                                        List<Vehiculo> vehiculos = vehiculoDAO.buscarVehiculos();
                                         selectedEmpty = (vehiculoId == 0) ? "selected" : "";
                                         out.println("<option value='0'" + selectedEmpty + ">Seleccione un vehiculo</option>");
                                         for (Vehiculo vehiculo : vehiculos) {
