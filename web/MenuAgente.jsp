@@ -9,8 +9,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script type="text/javascript">
+        function newSite(value) {
+            document.getElementById('myIframe').src = value;
+        }    
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Menú Principal</title>
+        <title>Sistema de infracción vehicular</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
         <style>
             body {
@@ -70,22 +75,22 @@
                 <div class="collapse navbar-collapse menuDeOpciones">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Agentes">Agentes</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light"  onClick="newSite('ControladorMenuPrincipal?menu=Agentes')">Agentes</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Usuarios" target="usuariosFrame">Usuarios</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light"  onClick="newSite('ControladorMenuPrincipal?menu=Usuarios')">Usuarios</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Vehiculos">Vehículos</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" onClick="newSite('ControladorMenuPrincipal?menu=Vehiculos')">Vehículos</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Conductores&accion=Listar" target="conductoresFrame">Conductores</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" onClick="newSite('ControladorMenuPrincipal?menu=Conductores')">Conductores</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Sanciones">Sanciones</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" onClick="newSite('ControladorMenuPrincipal?menu=Sanciones')">Sanciones</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Infracciones" target="infraccionesFrame">Infracciones</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" onClick="newSite('ControladorMenuPrincipal?menu=Infracciones')">Infracciones</a>
                         </li>
                     </ul>
                 </div>
@@ -101,28 +106,8 @@
                 </ul>
             </div>
         </nav>
-
-
-        <!--<div class="contenedor">
-            <div class="contenedorImagenes">
-                <div id="carouselExampleSlidesOnly"  class="carousel slide" data-bs-ride="carousel"  data-bs-pause="false">
-                    <div class="carousel-inner" >
-                        <div class="carousel-item active" data-bs-interval="2000">
-                            <img src="imagenes/imagen_menu_1.png" class="d-block imagen">
-                        </div>
-                        <div class="carousel-item" data-bs-interval="2000">
-                            <img src="imagenes/imagen_menu_2.png" class="d-block imagen">
-                        </div>
-                        <div class="carousel-item" data-bs-interval="2000">
-                            <img src="imagenes/imagen_menu_3.png" class="d-block imagen">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-
-        <div style="height: 550px">
-            <iframe name="conductoresFrame" style="width: 100%; height: 100%; border:none"></iframe>
+        <div style="height: 1000px; width: 100%; overflow: hidden">
+            <iframe style="height: 1000px; width: 100%" id="myIframe" src=""></iframe>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     </body>

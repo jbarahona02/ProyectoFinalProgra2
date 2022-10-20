@@ -40,7 +40,7 @@ public class ControladorMenuPrincipal extends HttpServlet {
     VehiculoDAO vehiculoDAO = new VehiculoDAO();
     AgenteDAO agenteDAO = new AgenteDAO();
     SancionDAO sancionDAO = new SancionDAO();
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
