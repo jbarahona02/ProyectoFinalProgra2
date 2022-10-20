@@ -133,7 +133,7 @@
                                     <%
 
                                         SancionDAO sancionDAO = new SancionDAO();
-                                        List<Sancion> sanciones = sancionDAO.listSancion();
+                                        List<Sancion> sanciones = sancionDAO.buscarSanciones();
                                         for (Sancion sancion : sanciones) {
                                             out.println("<option value=" + sancion.getId() + ">" + sancion.getDescripcion() + " - " + "Q" + sancion.getAmount() + "</option>");
                                         }
