@@ -55,7 +55,7 @@ public class ControladorPago extends HttpServlet {
             String infraccionId = request.getParameter("cmbInfraccion");
             String conductorId = request.getParameter("txtConductorId");
             request.setAttribute("conductorId", conductorId);
-            System.out.println("id * "+ infraccionId);
+            
             String error = "";
             boolean valida = (monto != null && !monto.trim().equals(""))
                     && (fechaDePago != null && !fechaDePago.trim().equals(""))

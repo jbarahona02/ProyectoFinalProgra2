@@ -61,7 +61,7 @@ public class ControladorConductor extends HttpServlet {
             if (!valida) {
                 List<Conductor> listaConductores = conductorDAO.listarConductores();
                 request.setAttribute("conductores", listaConductores);
-                request.getRequestDispatcher("Conductores.jsp?licencia=" + licencia + "&nombres=" + nombres + "&apellidos=" + apellidos + "&telefono=" + telefono + "&fechaNac" + fechaNacimiento + "&error=campos").forward(request, response);
+                request.getRequestDispatcher("Conductores.jsp?licencia=" + licencia + "&nombres=" + nombres + "&apellidos=" + apellidos + "&telefono=" + telefono + "&fechaNac=" + fechaNacimiento + "&error=campos").forward(request, response);
                 return;
             }
 
@@ -89,8 +89,9 @@ public class ControladorConductor extends HttpServlet {
             request.getRequestDispatcher("Conductores.jsp").forward(request, response);
         } else if (accion.equals("Actualizar")) {
 
-            int id = Integer.parseInt(request.getParameter("txtId"));
-
+            int id = request.getParameter("txtId") != null && request.getParameter("txtId") != "" ? Integer.parseInt(request.getParameter("txtId")) : 0;
+            Conductor conductorSeleccionado;
+            
             String licencia = request.getParameter("txtLicencia");
             String nombres = request.getParameter("txtNombres");
             String apellidos = request.getParameter("txtApellidos");
@@ -108,11 +109,11 @@ public class ControladorConductor extends HttpServlet {
 
                 List<Conductor> listaConductores = conductorDAO.listarConductores();
                 request.setAttribute("conductores", listaConductores);
-                request.getRequestDispatcher("Conductores.jsp?licencia=" + licencia + "&nombres=" + nombres + "&apellidos=" + apellidos + "&telefono=" + telefono + "&fechaNac" + fechaNacimiento + "&error=campos").forward(request, response);
+                request.getRequestDispatcher("Conductores.jsp?licencia=" + licencia + "&nombres=" + nombres + "&apellidos=" + apellidos + "&telefono=" + telefono + "&fechaNac=" + fechaNacimiento + "&idC=" + id + "&error=campos").forward(request, response);
                 return;
             }
 
-            Conductor conductorSeleccionado = conductorDAO.obtenerConductorPorId(id);
+            conductorSeleccionado = conductorDAO.obtenerConductorPorId(id);
             boolean licenciaDelUsuario = licencia.equals(conductorSeleccionado.getLicencia());
 
             if (!licenciaDelUsuario) {
@@ -120,7 +121,7 @@ public class ControladorConductor extends HttpServlet {
                 if (error != "") {
                     List<Conductor> listaConductores = conductorDAO.listarConductores();
                     request.setAttribute("conductores", listaConductores);
-                    request.getRequestDispatcher("Conductores.jsp?licencia=" + licencia + "&nombres=" + nombres + "&apellidos=" + apellidos + "&telefono=" + telefono + "&fechaNac=" + fechaNacimiento + "&error=licenciaRepetida").forward(request, response);
+                    request.getRequestDispatcher("Conductores.jsp?licencia=" + licencia + "&nombres=" + nombres + "&apellidos=" + apellidos + "&telefono=" + telefono + "&fechaNac=" + fechaNacimiento + "&idC=" + id + "&error=licenciaRepetida").forward(request, response);
                     return;
                 }
             }

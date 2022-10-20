@@ -128,21 +128,23 @@
             String apellidos;
             String telefono;
             String fechaNac;
-
+            int idC;
+            
             if (conductor != null) {
+                idC = conductor.getId();
                 licencia = conductor.getLicencia();
                 nombres = conductor.getNombres();
                 apellidos = conductor.getApellidos();
                 telefono = conductor.getTelefono();
                 fechaNac = conductor.getFechaNacimiento().toString();
-            } else {
-                licencia = request.getParameter("licencia") != null ? licencia = request.getParameter("licencia") : "";
-                nombres = request.getParameter("nombres") != null ? nombres = request.getParameter("nombres") : "";
-                apellidos = request.getParameter("apellidos") != null ? apellidos = request.getParameter("apellidos") : "";
-                telefono = request.getParameter("telefono") != null ? telefono = request.getParameter("telefono") : "";
-                fechaNac = request.getParameter("fechaNac") != null ? fechaNac = request.getParameter("fechaNac") : "";
+            } else {  
+                idC = request.getParameter("idC") != null ? Integer.parseInt(request.getParameter("idC")) : 0;
+                licencia = request.getParameter("licencia") != null ? request.getParameter("licencia") : "";
+                nombres = request.getParameter("nombres") != null ? request.getParameter("nombres") : "";
+                apellidos = request.getParameter("apellidos") != null ? request.getParameter("apellidos") : "";
+                telefono = request.getParameter("telefono") != null ? request.getParameter("telefono") : "";
+                fechaNac = request.getParameter("fechaNac") != null ? request.getParameter("fechaNac") : "";
             }
-
         %>
         <h1>Conductores</h1>
         <div class="contenedorFormulario">
@@ -204,7 +206,7 @@
                         </div>
                     </div>    
 
-                    <input type="hidden" name="txtId" value="${conductor.getId()}">        
+                    <input type="hidden" name="txtId" value="<%=idC%>">        
                     <div class="contenedorBotonAgregar">
                         <input type="submit" name="accion" value="Agregar" class="btn btn-dark botonAgregar">
                         <input type="submit" name="accion" value="Actualizar" class="btn btn-dark botonAgregar" style="margin-left: 10px;">
