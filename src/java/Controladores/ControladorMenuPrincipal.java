@@ -15,14 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import Modelos.Usuario;
-import Modelos.UsuarioDAO;
-import Modelos.Conductor;
-import Modelos.ConductorDAO;
-import Modelos.Pago;
-import Modelos.PagoDAO;
-import Modelos.Vehiculo;
-import Modelos.VehiculoDAO;
+import Modelos.*;
 
 /**
  *
@@ -46,7 +39,8 @@ public class ControladorMenuPrincipal extends HttpServlet {
     PagoDAO pagoDAO = new PagoDAO();
     VehiculoDAO vehiculoDAO = new VehiculoDAO();
     AgenteDAO agenteDAO = new AgenteDAO();
-    
+    SancionDAO sancionDAO = new SancionDAO();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -103,6 +97,14 @@ public class ControladorMenuPrincipal extends HttpServlet {
             request.setAttribute("usuario", usuario);
                 
             request.getRequestDispatcher("Agentes.jsp").forward(request, response);
+        }
+        
+        if (menu.equals("Sanciones")) {
+            List<Sancion> listaSanciones = sancionDAO.buscarSanciones();
+            request.setAttribute("sanciones", listaSanciones);
+            request.setAttribute("usuario", usuario);
+                
+            request.getRequestDispatcher("Sancion.jsp").forward(request, response);
         }
         
         try (PrintWriter out = response.getWriter()) {
