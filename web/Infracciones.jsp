@@ -99,9 +99,9 @@
     <body>
         <h1>Infraccion</h1>
         <div class="contenedorFormulario">
-            
+
             <div class="contenidoFormulario">
-                <%                   
+                <%
                     String error = request.getParameter("error");
                     if (error != null) {
                         out.println("<h1 class=" + "tituloAdvertencia" + ">Debe completar todos los campos</h1>");
@@ -121,6 +121,7 @@
                         Integer sancionId = request.getParameter("Sancion") != null ? Integer.valueOf(request.getParameter("Sancion")) : 0;
                         List<Sancion> sancionesEnSession = (ArrayList<Sancion>) request.getSession().getAttribute("sanciones-infraccion");
                         String addSancion = request.getParameter("AddSancion") != null ? request.getParameter("AddSancion") : "";
+                        String conductor = (String) request.getSession().getAttribute("conductor");
                     %>
                     <div>
                         <div class="row filaParaInput">
@@ -142,11 +143,14 @@
                                 </select>
                             </div>
                             <%
-                                if (infraccionEnSession != null && infraccionEnSession.getId() != 0) {
-                                    out.println("<button type='submit' name='btnAccion' value='btnActualizarSancion' class='btn btn-danger botones'>Agregar</button>");
-                                } else {
-                                    out.println("<button type='submit' name='btnAccion' value='btnAgregarSancion' class='btn btn-danger botones'>Agregar</button>");
+                                if (conductor == null) {
+                                    if (infraccionEnSession != null && infraccionEnSession.getId() != 0) {
+                                        out.println("<button type='submit' name='btnAccion' value='btnActualizarSancion' class='btn btn-danger botones'>Agregar</button>");
+                                    } else {
+                                        out.println("<button type='submit' name='btnAccion' value='btnAgregarSancion' class='btn btn-danger botones'>Agregar</button>");
+                                    }
                                 }
+
                             %>
 
                         </div>
@@ -198,14 +202,14 @@
 
                     <div class="contenedorBotonAgregar">
                         <%
-                            if (id != null && id != "") {
+                            if (id != null && id != "" && conductor == null) {
                                 if (infraccionEnSession != null && !infraccionEnSession.isEstado()) {
                                     out.println("<input type=" + "'submit'" + "name=" + "'btnAccion'" + " value=" + "'Actualizar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
                                 }
 
                                 out.println("<input type=" + "'submit'" + "name=" + "'btnAccion'" + " value=" + "'Limpiar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
                                 out.println("<input type=" + "'submit'" + "name=" + "'btnAccion'" + " value=" + "'Reporte'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
-                            } else {
+                            } else if (conductor == null) {
                                 out.println("<input type=" + "'submit'" + "  name=" + "'btnAccion'" + " value=" + "'Agregar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
                             }
                         %>
@@ -271,22 +275,21 @@
                                 out.println("<td>" + sancionEnSession.getDescripcion() + "</td>");
                                 out.println("<td>" + sancionEnSession.getAmount() + "</td>");
                                 if (infraccionEnSession != null && infraccionEnSession.getId() != 0 && !infraccionEnSession.isEstado()) {
-                                    
+
                                 }
                                 out.println("<tr>");
                                 out.println("</tr>");
                             }
                         } else {
                             InfraccionDAO infraccionDAO = new InfraccionDAO();
-                            List<Infraccion> infracciones = new ArrayList(); 
-                            String conductor = (String) request.getSession().getAttribute("conductor");
+                            List<Infraccion> infracciones = new ArrayList();
                             if (conductor != null) {
                                 int conductorInt = Integer.valueOf(conductor);
                                 infracciones = infraccionDAO.infraccionesPorConductor(conductorInt);
                             } else {
-                                infracciones = infraccionDAO.listarInfracciones(); 
+                                infracciones = infraccionDAO.listarInfracciones();
                             }
-                            
+
                             if (!infracciones.isEmpty()) {
                                 out.println("<form action=" + "'ControladorInfraccion'" + "method=" + "'POST'" + ">");
                                 for (Infraccion infraccion : infracciones) {
