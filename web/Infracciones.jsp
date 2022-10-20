@@ -278,7 +278,15 @@
                             }
                         } else {
                             InfraccionDAO infraccionDAO = new InfraccionDAO();
-                            List<Infraccion> infracciones = infraccionDAO.listarInfracciones();
+                            List<Infraccion> infracciones = new ArrayList(); 
+                            String conductor = (String) request.getSession().getAttribute("conductor");
+                            if (conductor != null) {
+                                int conductorInt = Integer.valueOf(conductor);
+                                infracciones = infraccionDAO.infraccionesPorConductor(conductorInt);
+                            } else {
+                                infracciones = infraccionDAO.listarInfracciones(); 
+                            }
+                            
                             if (!infracciones.isEmpty()) {
                                 out.println("<form action=" + "'ControladorInfraccion'" + "method=" + "'POST'" + ">");
                                 for (Infraccion infraccion : infracciones) {
