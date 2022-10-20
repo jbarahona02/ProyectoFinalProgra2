@@ -181,7 +181,7 @@
                                 <select name="Vehiculo"  id="cmbVehiculo" class="form-control">
                                     <%
                                         VehiculoDAO vehiculoDAO = new VehiculoDAO();
-                                        List<Vehiculo> vehiculos = vehiculoDAO.listVehiculos();
+                                        List<Vehiculo> vehiculos = vehiculoDAO.buscarVehiculos();
                                         selectedEmpty = (vehiculoId == 0) ? "selected" : "";
                                         out.println("<option value='0'" + selectedEmpty + ">Seleccione un vehiculo</option>");
                                         for (Vehiculo vehiculo : vehiculos) {

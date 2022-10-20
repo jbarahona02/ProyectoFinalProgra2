@@ -1,9 +1,10 @@
 <%-- 
-    Document   : MenuPrincipal
-    Created on : 6/10/2022, 10:21:25 PM
+    Document   : MenuAgente
+    Created on : 7/10/2022, 06:32:07 PM
     Author     : Javier Barahona
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -69,16 +70,22 @@
                 <div class="collapse navbar-collapse menuDeOpciones">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Usuario">Usuario</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Agentes">Agentes</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Vehiculo">Vehículo</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Usuarios" target="usuariosFrame">Usuarios</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Infracciones">Infracciones</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Vehiculos">Vehículos</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Pagos&conductorId=${usuario.getConductor()}" target="pagosFrame">Pagos</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Conductores&accion=Listar" target="conductoresFrame">Conductores</a>
+                        </li>
+                        <li class="nav-item elementosDeMenu">
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Sanciones">Sanciones</a>
+                        </li>
+                        <li class="nav-item elementosDeMenu">
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" href="ControladorMenuPrincipal?menu=Infracciones" target="infraccionesFrame">Infracciones</a>
                         </li>
                     </ul>
                 </div>
@@ -95,8 +102,27 @@
             </div>
         </nav>
 
-        <div style="height: 100%">
-            <iframe name="pagosFrame" style="width: 100%; height: 100%; border:none"></iframe>
+
+        <!--<div class="contenedor">
+            <div class="contenedorImagenes">
+                <div id="carouselExampleSlidesOnly"  class="carousel slide" data-bs-ride="carousel"  data-bs-pause="false">
+                    <div class="carousel-inner" >
+                        <div class="carousel-item active" data-bs-interval="2000">
+                            <img src="imagenes/imagen_menu_1.png" class="d-block imagen">
+                        </div>
+                        <div class="carousel-item" data-bs-interval="2000">
+                            <img src="imagenes/imagen_menu_2.png" class="d-block imagen">
+                        </div>
+                        <div class="carousel-item" data-bs-interval="2000">
+                            <img src="imagenes/imagen_menu_3.png" class="d-block imagen">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+        <div style="height: 550px">
+            <iframe name="vehiculosFramce" style="width: 100%; height: 100%; border:none"></iframe>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     </body>

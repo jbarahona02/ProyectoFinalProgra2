@@ -19,6 +19,8 @@ import Modelos.Conductor;
 import Modelos.ConductorDAO;
 import Modelos.Pago;
 import Modelos.PagoDAO;
+import Modelos.Vehiculo;
+import Modelos.VehiculoDAO;
 
 /**
  *
@@ -40,6 +42,7 @@ public class ControladorMenuPrincipal extends HttpServlet {
     UsuarioDAO usuarioDAO = new UsuarioDAO();
     ConductorDAO conductorDAO = new ConductorDAO();
     PagoDAO pagoDAO = new PagoDAO();
+    VehiculoDAO vehiculoDAO = new VehiculoDAO();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -48,6 +51,7 @@ public class ControladorMenuPrincipal extends HttpServlet {
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");
         String conductorId = request.getParameter("conductorId");
+        String vehiculoId = request.getParameter("vehiculoId");
         
         if(menu.equals("PrincipalAgente")){
             request.getRequestDispatcher("MenuAgente.jsp").forward(request, response);
@@ -56,7 +60,6 @@ public class ControladorMenuPrincipal extends HttpServlet {
         if (menu.equals("PrincipalConductor")) {
             request.getRequestDispatcher("MenuConductor.jsp").forward(request, response);
         }
-
         
         if (menu.equals("Usuarios")) {
             request.getRequestDispatcher("Usuarios.jsp").forward(request, response);
@@ -81,6 +84,14 @@ public class ControladorMenuPrincipal extends HttpServlet {
             request.getSession().setAttribute("sanciones-infraccion", null);
             request.getSession().setAttribute("infraccion", null);
             request.getRequestDispatcher("Infracciones.jsp").forward(request, response);
+        }
+        
+        if (menu.equals("Vehiculos")) {
+            List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
+            request.setAttribute("vehiculos", listaVehiculos);
+            request.setAttribute("usuario", usuario);
+                
+            request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
         }
         
         try (PrintWriter out = response.getWriter()) {
