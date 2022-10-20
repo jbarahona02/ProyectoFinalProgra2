@@ -151,7 +151,8 @@
         <h1>Pagos</h1>
         <div class="contenedorFormulario">
             <div class="contenidoFormulario">
-                <%                    String error = request.getParameter("error");
+                <%                    
+                    String error = request.getParameter("error");
                     String mensaje = request.getParameter("mensaje");
                     if (error != null) {
                         if (error.equals("PagoExistente")) {
@@ -207,10 +208,10 @@
                                         for (Infraccion infraccion : infracciones) {
                                             if(infraccion.getId() == idInfraccion){
                                                 out.println("<option value=" + infraccion.getId() + " selected='selected'>" + infraccion.getId() + " - Placa de vehículo: "
-                                                    + vehiculoDAO.obtenerVehiculoPorId(infraccion.getVehiculo()).getPlaca() + " - " + "Q" + infraccion.getTotal() + "</option>");
+                                                    + vehiculoDAO.buscarVehiculo(infraccion.getVehiculo()).getPlaca() + " - " + "Q" + infraccion.getTotal() + "</option>");
                                             } else {
                                                 out.println("<option value=" + infraccion.getId() + ">" + infraccion.getId() + " - Placa de vehículo: "
-                                                    + vehiculoDAO.obtenerVehiculoPorId(infraccion.getVehiculo()).getPlaca() + " - " + "Q" + infraccion.getTotal() + "</option>");
+                                                    + vehiculoDAO.buscarVehiculo(infraccion.getVehiculo()).getPlaca() + " - " + "Q" + infraccion.getTotal() + "</option>");
                                             }
                                             
                                         }
@@ -233,7 +234,7 @@
                     <thead>
                         <tr class="table-dark" style="text-align: center">
                             <th>ID</th>
-                            <th>Monto</th>
+                            <th>Monto pagado</th>
                             <th>Fecha de pago Año-Mes-Día</th>
                             <th>No. Infracción</th>
                             <th>Acciones</th>
@@ -243,7 +244,7 @@
                         <c:forEach var="pago" items="${pagos}">
                             <tr class="table-dark">
                                 <td>${pago.getId()}</td>
-                                <td>${pago.getMonto()}</td>
+                                <td>Q${pago.getMonto()}</td>
                                 <td>${pago.getFechaDePago()}</td>
                                 <td>${pago.getInfraccionId()}</td>
                                 <td class="columnaDeBotones">

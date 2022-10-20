@@ -13,19 +13,19 @@ public class Conexion {
     /**
      * @param args the command line arguments
      */
-    Connection connection;
+    private static Connection connection = null;
     
-    public Conexion() {
+    public Connection getConexion() {
        try {
+            if (connection != null) return connection;
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project_2","root","Password!234");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyectofinalprogra2","root","");
             System.out.println("Conexión con éxito");
+            
+            return connection;
         } catch(Exception e) {
             System.err.println("Error de conexión " + e.getMessage());
+            return null;
         } 
-    }
-    
-    public Connection getConexion(){ 
-        return connection;
     }
 }
