@@ -5,6 +5,8 @@
  */
 package Controladores;
 
+import Modelos.Agente;
+import Modelos.AgenteDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -43,6 +45,7 @@ public class ControladorMenuPrincipal extends HttpServlet {
     ConductorDAO conductorDAO = new ConductorDAO();
     PagoDAO pagoDAO = new PagoDAO();
     VehiculoDAO vehiculoDAO = new VehiculoDAO();
+    AgenteDAO agenteDAO = new AgenteDAO();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -92,6 +95,14 @@ public class ControladorMenuPrincipal extends HttpServlet {
             request.setAttribute("usuario", usuario);
                 
             request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
+        }
+        
+        if (menu.equals("Agentes")) {
+            List<Agente> listaAgentes = agenteDAO.buscarAgentes();
+            request.setAttribute("agentes", listaAgentes);
+            request.setAttribute("usuario", usuario);
+                
+            request.getRequestDispatcher("Agentes.jsp").forward(request, response);
         }
         
         try (PrintWriter out = response.getWriter()) {

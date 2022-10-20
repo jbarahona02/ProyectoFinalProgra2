@@ -69,7 +69,7 @@ public class VehiculoDAO {
         }
     }
     
-        public Vehiculo buscarVehiculo(int id) {
+    public Vehiculo buscarVehiculo(int id) {
         Vehiculo vehiculo = new Vehiculo();
         String sql = "SELECT *FROM vehiculo where id = ?";
         try {
@@ -93,17 +93,17 @@ public class VehiculoDAO {
         }
     }
         
-        public Vehiculo validarVehiculoConPlaca(String placa) {
+    public Vehiculo validarVehiculoConPlaca(String placa) {
         Vehiculo vehiculo = new Vehiculo();
         String query = "SELECT * FROM vehiculo where placa = ?";
-        
+
         try {
             connection = conexionDB.getConexion();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, placa);
-            
+
             resultadoSentencia = preparedStatement.executeQuery();
-            
+
             while (resultadoSentencia.next()) {
                 vehiculo.setId(resultadoSentencia.getInt("id"));
                 vehiculo.setPlaca(resultadoSentencia.getString("placa"));
@@ -115,7 +115,7 @@ public class VehiculoDAO {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         return vehiculo;
     }
     
