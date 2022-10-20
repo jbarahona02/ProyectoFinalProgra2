@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.List"%>
@@ -203,6 +204,7 @@
                                 }
 
                                 out.println("<input type=" + "'submit'" + "name=" + "'btnAccion'" + " value=" + "'Limpiar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
+                                out.println("<input type=" + "'submit'" + "name=" + "'btnAccion'" + " value=" + "'Reporte'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
                             } else {
                                 out.println("<input type=" + "'submit'" + "  name=" + "'btnAccion'" + " value=" + "'Agregar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
                             }
