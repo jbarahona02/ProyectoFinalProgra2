@@ -187,10 +187,6 @@ public class ControladorInfraccion extends HttpServlet {
             }
         }
         
-        if (accion.equals("Reporte")) {
-            String id = request.getParameter("txtId");
-            request.getRequestDispatcher("ReporteInfraccion.jsp?id=" + id).forward(request, response);
-        }
 
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */

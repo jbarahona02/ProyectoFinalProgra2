@@ -97,6 +97,7 @@
         </style>
     </head>
     <body>
+        
         <h1>Infraccion</h1>
         <div class="contenedorFormulario">
 
@@ -208,11 +209,13 @@
                                 }
 
                                 out.println("<input type=" + "'submit'" + "name=" + "'btnAccion'" + " value=" + "'Limpiar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
-                                out.println("<input type=" + "'submit'" + "name=" + "'btnAccion'" + " value=" + "'Reporte'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
+
+                                out.println("<a class='btn botonAgregar' href='ReporteInfraccion.jsp?id=" + id + "'>Infracciones</a>");
                             } else if (conductor == null) {
                                 out.println("<input type=" + "'submit'" + "  name=" + "'btnAccion'" + " value=" + "'Agregar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
                             }
                         %>
+                         
                     </div>
                 </form>
             </div>
