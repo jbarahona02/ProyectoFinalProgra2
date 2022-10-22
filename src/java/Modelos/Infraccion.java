@@ -20,6 +20,9 @@ public class Infraccion {
     private Integer agente;
     private Integer vehiculo;
     private List<InfraccionDetalle> detalle;
+    private String nombreAgente;
+    private String placa;
+    private String estadoDescripcion;
 
   
     
@@ -94,5 +97,31 @@ public class Infraccion {
     public void setDetalle(List<InfraccionDetalle> detalle) {
         this.detalle = detalle;
     }
+
+    public String getNombreAgente() {
+        return nombreAgente;
+    }
+
+    public void setNombreAgente(String nombreAgente) {
+        this.nombreAgente = nombreAgente;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+
+    public String getEstadoDescripcion() {
+        return estadoDescripcion;
+    }
+
+    public void setEstadoDescripcion(String estadoDescripcion) {
+        this.estadoDescripcion = estadoDescripcion;
+    }
+    
+    
     
 }

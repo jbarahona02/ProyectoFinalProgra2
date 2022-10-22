@@ -251,13 +251,12 @@
                             if (!usuarios.isEmpty()) {
                                 out.println("<form action=" + "'ControladorUsuario'" + "method=" + "'POST'" + ">");
                                 for (Usuario item : usuarios) {
-                                    String agenteText = (item.getAgente() == 0) ?"" : String.valueOf(item.getAgente());
-                                    String usuarioText = (item.getConductor() == 0) ? "" : String.valueOf(item.getConductor());
+                                    String usuarioText = item.getConductorNombre() == null ? " " : item.getConductorNombre();
                                     out.println("<tr class=" + "'table-dark'" + ">");
 
                                     out.println("<td>" + item.getId() + "</td>");
                                     out.println("<td>" + item.getEmail() + "</td>");
-                                    out.println("<td>" + agenteText + "</td>");
+                                    out.println("<td>" + item.getAgenteNombre() + "</td>");
                                     out.println("<td>" + usuarioText + "</td>");
                                     out.println("<td class=" + "'columnaDeBotones'" + ">");
                                         out.println("<div class=" + "'d-grid gap-2 d-md-block contenedorBotones'" + ">");

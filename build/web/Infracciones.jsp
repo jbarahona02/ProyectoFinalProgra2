@@ -97,7 +97,7 @@
         </style>
     </head>
     <body>
-        
+
         <h1>Infraccion</h1>
         <div class="contenedorFormulario">
 
@@ -210,12 +210,12 @@
 
                                 out.println("<input type=" + "'submit'" + "name=" + "'btnAccion'" + " value=" + "'Limpiar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
 
-                                out.println("<a class='btn botonAgregar' href='ReporteInfraccion.jsp?id=" + id + "'>Infracciones</a>");
+                                out.println("<a class='btn btn-dark botonAgregar' href='ReporteInfraccion.jsp?id=" + id + "'>Reporte</a>");
                             } else if (conductor == null) {
                                 out.println("<input type=" + "'submit'" + "  name=" + "'btnAccion'" + " value=" + "'Agregar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
                             }
                         %>
-                         
+
                     </div>
                 </form>
             </div>
@@ -231,7 +231,8 @@
                             if (id != null && !id.equals("") && !addSancion.equals("1")) {
                                 out.println("<th>Id</th>");
                                 out.println("<th>Infraccion</th>");
-                                out.println("<th>Sancion</th>");
+                                out.println("<th>Descripcion Sancion</th>");
+                                out.println("<th>Monto</th>");
                                 if (infraccionEnSession != null && !infraccionEnSession.isEstado()) {
                                     out.println("<th>Acciones</th>");
                                 }
@@ -258,14 +259,17 @@
                                     out.println("<tr class=" + "'table-dark'" + ">");
                                     out.println("<td>" + detalle.getId() + "</td>");
                                     out.println("<td>" + detalle.getInfraccion() + "</td>");
-                                    out.println("<td>" + detalle.getSancion() + "</td>");
-                                    out.println("<div class=" + "'d-grid gap-2 d-md-block contenedorBotones'" + ">");
-                                    out.println("<td class=" + "'columnaDeBotones'" + ">");
+                                    out.println("<td>" + detalle.getSancionDescripcion() + "</td>");
+                                    out.println("<td>" + detalle.getSancionMonto() + "</td>");
+
                                     if (!infraccionEnSession.isEstado()) {
+                                        out.println("<div class=" + "'d-grid gap-2 d-md-block contenedorBotones'" + ">");
+                                        out.println("<td class=" + "'columnaDeBotones'" + ">");
                                         out.println("<a href='ControladorInfraccion?registro=" + detalle.getInfraccion() + "&btnAccion=EliminarDetalle&registroDetalle=" + detalle.getId() + "'  class='btn btn-danger' >Eliminar</a>");
+                                        out.println("</div>");
+                                        out.println("</td>");
                                     }
-                                    out.println("</div>");
-                                    out.println("</td>");
+
                                     out.println("<tr>");
                                     out.println("</tr>");
                                 }
@@ -300,10 +304,10 @@
 
                                     out.println("<td>" + infraccion.getId() + "</td>");
                                     out.println("<td>" + infraccion.getFechaCreacion() + "</td>");
-                                    out.println("<td>" + infraccion.isEstado() + "</td>");
+                                    out.println("<td>" + infraccion.getEstadoDescripcion() + "</td>");
                                     out.println("<td>" + infraccion.getTotal() + "</td>");
-                                    out.println("<td>" + infraccion.getAgente() + "</td>");
-                                    out.println("<td>" + infraccion.getVehiculo() + "</td>");
+                                    out.println("<td>" + infraccion.getNombreAgente() + "</td>");
+                                    out.println("<td>" + infraccion.getPlaca() + "</td>");
                                     out.println("<td class=" + "'columnaDeBotones'" + ">");
                                     out.println("<div class=" + "'d-grid gap-2 d-md-block contenedorBotones'" + ">");
                                     out.println(" <a href='ControladorInfraccion?registro=" + infraccion.getId() + "&btnAccion=Seleccionar' class='btn btn-warning estiloEnlace' >Seleccionar</a>");

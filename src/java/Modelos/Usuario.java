@@ -10,11 +10,14 @@ package Modelos;
  * @author Admin
  */
 public class Usuario {
+
     private int id;
     private String email;
     private String contrasenia;
     private int agente;
     private int conductor;
+    private String agenteNombre;
+    private String conductorNombre;
 
     public Usuario(int id, String email, String contrasenia, int agente, int conductor) {
         this.id = id;
@@ -66,6 +69,23 @@ public class Usuario {
     public void setConductor(int conductor) {
         this.conductor = conductor;
     }
+
+    public String getAgenteNombre() {
+        return agenteNombre;
+    }
+
+    public void setAgenteNombre(String agenteNombre) {
+        this.agenteNombre = agenteNombre;
+    }
+
+    public String getConductorNombre() {
+        return conductorNombre;
+    }
+
+    public void setConductorNombre(String conductorNombre) {
+        this.conductorNombre = conductorNombre;
+    }
     
     
+
 }
