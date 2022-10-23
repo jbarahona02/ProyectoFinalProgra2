@@ -208,10 +208,10 @@
                                         for (Infraccion infraccion : infracciones) {
                                             if(infraccion.getId() == idInfraccion){
                                                 out.println("<option value=" + infraccion.getId() + " selected='selected'>" + infraccion.getId() + " - Placa de vehículo: "
-                                                    + vehiculoDAO.buscarVehiculo(infraccion.getVehiculo()).getPlaca() + " - " + "Q" + infraccion.getTotal() + "</option>");
+                                                    + infraccion.getPlaca() + " - " + "Q" + infraccion.getTotal() + "</option>");
                                             } else {
                                                 out.println("<option value=" + infraccion.getId() + ">" + infraccion.getId() + " - Placa de vehículo: "
-                                                    + vehiculoDAO.buscarVehiculo(infraccion.getVehiculo()).getPlaca() + " - " + "Q" + infraccion.getTotal() + "</option>");
+                                                    + infraccion.getPlaca() + " - " + "Q" + infraccion.getTotal() + "</option>");
                                             }
                                             
                                         }
@@ -237,6 +237,8 @@
                             <th>Monto pagado</th>
                             <th>Fecha de pago Año-Mes-Día</th>
                             <th>No. Infracción</th>
+                            <th>Licencia del conductor</th>
+                            <th>Placa del vehículo</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -247,6 +249,8 @@
                                 <td>Q${pago.getMonto()}</td>
                                 <td>${pago.getFechaDePago()}</td>
                                 <td>${pago.getInfraccionId()}</td>
+                                <td>${pago.getLicenciaConductor()}</td>
+                                <td>${pago.getPlacaVehiculo()}</td>
                                 <td class="columnaDeBotones">
                                     <div class="d-grid gap-2 d-md-block contenedorBotones">
                                         <a class="btn btn-warning estiloEnlace" href="ControladorPago?accion=Seleccionar&id=${pago.getId()}&conductorId=${conductorId}">Seleccionar</a>

@@ -24,7 +24,9 @@ public class PagoDAO {
     ResultSet resultSet;
     
     public List<Pago> listarPagosDelConductor(int idCondutor) {
-        String sql = "SELECT * FROM pago INNER JOIN infraccion ON infraccion.id = pago.infraccion "
+        String sql = "SELECT pago.id, pago.monto, pago.fecha_pago, pago.infraccion, vehiculo.placa as placa, "  
+                + "conductor.licencia as licencia FROM pago "
+                + "INNER JOIN infraccion ON infraccion.id = pago.infraccion "
                 + "INNER JOIN vehiculo ON vehiculo.id = infraccion.vehiculo "
                 + "INNER JOIN conductor ON conductor.id = vehiculo.conductor "
                 + "WHERE conductor.id = ?";
@@ -42,8 +44,9 @@ public class PagoDAO {
                 pago.setMonto(resultSet.getDouble("monto"));
                 pago.setFechaDePago(resultSet.getDate("fecha_pago"));
                 pago.setInfraccionId(resultSet.getInt("infraccion"));
-                System.out.println(pago.getMonto());
-
+                pago.setPlacaVehiculo(resultSet.getString("placa"));
+                pago.setLicenciaConductor(resultSet.getString("licencia"));
+            
                 listaPagos.add(pago);
             }
         } catch (Exception ex) {

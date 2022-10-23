@@ -297,23 +297,24 @@ public class InfraccionDAO {
     public List<Infraccion> infraccionesPorConductor(int conductorId) {
         List<Infraccion> result = new ArrayList<>();
         String sql = "SELECT \n"
-                + "	i.id as infraccionId,\n"
-                + "    i.fecha_creacion as fechaCreacion,\n"
-                + "    i.estado as estado,\n"
-                + "    IF(i.estado, 'PAGADO','NO PAGADO') as estadoDescripcion,\n"
-                + "    i.agente as agente,\n"
-                + "    i.vehiculo as vehiculo,\n"
-                + "    a.nombre as nombreAgente,\n"
-                + "    v.placa as placa,\n"
-                + "    i.total as total\n"
+                + "i.id as infraccionId, \n"
+                + "i.fecha_creacion as fechaCreacion, \n"
+                + "i.estado as estado, \n"
+                + "IF(i.estado, 'PAGADO','NO PAGADO') as estadoDescripcion, \n"
+                + "i.agente as agente, \n"
+                + "i.vehiculo as vehiculo, \n"
+                + "a.nombre as nombreAgente, \n"
+                + "v.placa as placa, \n"
+                + "i.total as total \n"
                 + "FROM infraccion i \n"
-                + "JOIN agente a on a.id = i.agente\n"
-                + "JOIN vehiculo v on v.id = i.vehiculo\n"
-                + "JOIN conductor c on c.id = v.conductor\n"
+                + "JOIN agente a on a.id = i.agente \n"
+                + "JOIN vehiculo v on v.id = i.vehiculo \n"
+                + "JOIN conductor c on c.id = v.conductor \n"
                 + "WHERE c.id = ?;";
         try {
             cn = conexionDB.getConexion();
             ps = cn.prepareStatement(sql);
+            ps.setInt(1, conductorId);
             rs = ps.executeQuery();
 
             while (rs.next()) {

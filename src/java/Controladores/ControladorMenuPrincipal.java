@@ -19,7 +19,7 @@ import Modelos.*;
 
 /**
  *
- * @author Admin
+ * @author Javier, José y Alejandro
  */
 @WebServlet(name = "ControladorMenuPrincipal", urlPatterns = {"/ControladorMenuPrincipal"})
 public class ControladorMenuPrincipal extends HttpServlet {
