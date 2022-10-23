@@ -157,7 +157,7 @@ where i.id = $P{ID};]]>
 				<textElement>
 					<font size="14"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{FechaPago}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.text.SimpleDateFormat("dd/MM/YYYY").format($F{FechaPago})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
