@@ -16,7 +16,7 @@ import Modelos.UsuarioDAO;
 import Modelos.Usuario;
 /**
  *
- * @author Admin
+ * @author Javier Barahona
  */
 @WebServlet(name = "ControladorInicioSesion", urlPatterns = {"/ControladorInicioSesion"})
 public class ControladorInicioSesion extends HttpServlet {
@@ -44,6 +44,14 @@ public class ControladorInicioSesion extends HttpServlet {
             String email = request.getParameter("txtCorreo");
             String contrasenia = request.getParameter("txtContrasenia");
             
+            boolean validar = (email != null && !email.trim().equals(""))
+                               && (contrasenia != null && !contrasenia.trim().equals(""));
+            
+            if(!validar){
+                request.getRequestDispatcher("index.jsp?error=campos").forward(request, response);
+                return;
+            }
+            
             usuarioIngresado = usuarioDAO.validarUsuario(email, contrasenia);
 
             if(usuarioIngresado.getEmail() != null){
@@ -55,7 +63,7 @@ public class ControladorInicioSesion extends HttpServlet {
                     request.getRequestDispatcher("ControladorMenuPrincipal?menu=PrincipalConductor&conductorId="+String.valueOf(usuarioIngresado.getConductor())).forward(request, response);
                 }
             }  else {
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp?error=usuario").forward(request, response);
             }
         } else if (accion.equals("Registrarse")) {
             request.getRequestDispatcher("Registrar.jsp").forward(request, response);

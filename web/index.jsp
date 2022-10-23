@@ -1,7 +1,7 @@
 <%-- 
-    Document   : Login
+    Document   : Index
     Created on : 30/09/2022, 08:40:43 PM
-    Author     : Admin
+    Author     : Javier Barahona
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -37,10 +37,13 @@
                 padding-top: 57px;
             }
             
-            .formulario {
-                margin-top: 28px;
+            .tituloAdvertencia {
+                font-weight: bold;
+                color: red;
+                font-size: 17px;
+                text-align: center;
             }
-            
+          
             .etiquetaDeInput {
                 text-align: left;
                 margin-left: 50px;
@@ -92,6 +95,18 @@
 
                 <div class="fondoDeLogin">
                         <h1 class="titulo"> Iniciar Sesión </h1>
+                        <%                    
+                            String error = request.getParameter("error");
+   
+                            if (error != null) {
+                                if (error.equals("usuario")) {
+                                    out.println("<h1 class=" + "tituloAdvertencia" + ">El usuario o la contraseña son incorrectos</h1>");
+                                } else if (error.equals("campos")) {
+                                    out.println("<h1 class=" + "tituloAdvertencia" + ">Debe completar todos los campos</h1>");
+                                }
+                            }
+
+                        %>
                         <form class="formulario" action="ControladorInicioSesion" method="POST">
                             <div class="etiquetaDeInput">
                                 <label class="form-label">Correo: </label>

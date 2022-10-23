@@ -107,7 +107,7 @@
             </div>
         </nav>
         <div style="height: 1000px; width: 100%; overflow: hidden">
-            <iframe style="height: 1000px; width: 100%" id="myIframe" src=""></iframe>
+            <iframe style="height: 1000px; width: 100%" id="myIframe" src="MenuImagenes.jsp"></iframe>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     </body>
