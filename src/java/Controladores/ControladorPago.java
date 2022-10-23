@@ -55,11 +55,11 @@ public class ControladorPago extends HttpServlet {
             String infraccionId = request.getParameter("cmbInfraccion");
             String conductorId = request.getParameter("txtConductorId");
             request.setAttribute("conductorId", conductorId);
-            
+          
             String error = "";
             boolean valida = (monto != null && !monto.trim().equals(""))
                     && (fechaDePago != null && !fechaDePago.trim().equals(""))
-                    && (infraccionId != null && !infraccionId.trim().equals(""));
+                    && (infraccionId != null && !infraccionId.trim().equals("0"));
 
             if (!valida) {
                 List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(Integer.parseInt(conductorId));

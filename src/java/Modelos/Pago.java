@@ -14,6 +14,8 @@ public class Pago {
     private double monto;
     private Date fechaDePago;
     private int infraccionId;
+    private String placaVehiculo;
+    private String licenciaConductor;
 
     public Pago(int id, double monto, Date fechaDePago, int infraccionId) {
         this.id = id;
@@ -55,5 +57,21 @@ public class Pago {
 
     public void setInfraccionId(int infraccionId) {
         this.infraccionId = infraccionId;
+    }
+
+    public String getPlacaVehiculo() {
+        return placaVehiculo;
+    }
+
+    public void setPlacaVehiculo(String placaVehiculo) {
+        this.placaVehiculo = placaVehiculo;
+    }
+
+    public String getLicenciaConductor() {
+        return licenciaConductor;
+    }
+
+    public void setLicenciaConductor(String licenciaConductor) {
+        this.licenciaConductor = licenciaConductor;
     }
 }

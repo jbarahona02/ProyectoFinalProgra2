@@ -98,7 +98,7 @@
     </head>
     <body>
 
-        <h1>Infraccion</h1>
+        <h1>Infracciones</h1>
         <div class="contenedorFormulario">
 
             <div class="contenidoFormulario">
