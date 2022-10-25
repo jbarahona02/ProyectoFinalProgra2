@@ -266,7 +266,7 @@
                                 <td>${vehiculo.getColor()}</td>
                                 <td>${vehiculo.getLinea()}</td>
                                 <td>${vehiculo.getMarca()}</td>
-                                <td>${vehiculo.getConductor()}</td>
+                                <td>${vehiculo.getNombreConductor()}</td>
                                 <td class="columnaDeBotones">
                                     <div class="d-grid gap-2 d-md-block contenedorBotones">
                                         <a class="btn btn-warning estiloEnlace" href="ControladorVehiculoConductor?accion=Seleccionar&conductorId=${vehiculo.getConductor()}&id=${vehiculo.getId()}">Seleccionar</a>

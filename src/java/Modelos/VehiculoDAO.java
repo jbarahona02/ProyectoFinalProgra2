@@ -45,7 +45,15 @@ public class VehiculoDAO {
     
     public List<Vehiculo> buscarVehiculos() {
         List<Vehiculo> vehiculos = new ArrayList<>();
-        String query = "SELECT *FROM vehiculo";
+        String query = "SELECT v.id as id,\n" +
+"		v.placa as placa,\n" +
+"        v.color as color,\n" +
+"        v.linea as linea,\n" +
+"        v.marca as marca,\n" +
+"        v.conductor as conductor,\n" +
+"        c.nombres as conductorNombre\n" +
+"From vehiculo v\n" +
+"Left join conductor c on v.conductor = c.id;";
         try {
             connection = conexionDB.getConexion();
             preparedStatement = connection.prepareStatement(query);
@@ -59,6 +67,7 @@ public class VehiculoDAO {
                 vehiculo.setLinea(resultadoSentencia.getString("linea"));
                 vehiculo.setMarca(resultadoSentencia.getString("marca"));
                 vehiculo.setConductor(resultadoSentencia.getInt("conductor"));
+                vehiculo.setNombreConductor(resultadoSentencia.getString("conductorNombre"));
                 vehiculos.add(vehiculo);
             }
 
@@ -71,7 +80,16 @@ public class VehiculoDAO {
     
         public List<Vehiculo> buscarVehiculosPorConductor(int id) {
         List<Vehiculo> vehiculos = new ArrayList<>();
-        String query = "SELECT * FROM vehiculo where vehiculo.conductor = ?";
+        String query = "SELECT v.id as id,\n" +
+"		v.placa as placa,\n" +
+"        v.color as color,\n" +
+"        v.linea as linea,\n" +
+"        v.marca as marca,\n" +
+"        v.conductor as conductor,\n" +
+"        c.nombres as conductorNombre\n" +
+"From vehiculo v\n" +
+"Left join conductor c on v.conductor = c.id\n" +
+"Where conductor = ?;";
         try {
             connection = conexionDB.getConexion();
             preparedStatement = connection.prepareStatement(query);
@@ -86,6 +104,8 @@ public class VehiculoDAO {
                 vehiculo.setLinea(resultadoSentencia.getString("linea"));
                 vehiculo.setMarca(resultadoSentencia.getString("marca"));
                 vehiculo.setConductor(resultadoSentencia.getInt("conductor"));
+                vehiculo.setNombreConductor(resultadoSentencia.getString("conductorNombre"));
+
                 vehiculos.add(vehiculo);
             }
 
