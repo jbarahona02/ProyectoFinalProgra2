@@ -33,8 +33,6 @@ public class ControladorMenuPrincipal extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    Usuario usuario = new Usuario();
-    UsuarioDAO usuarioDAO = new UsuarioDAO();
     ConductorDAO conductorDAO = new ConductorDAO();
     PagoDAO pagoDAO = new PagoDAO();
     VehiculoDAO vehiculoDAO = new VehiculoDAO();
@@ -46,9 +44,8 @@ public class ControladorMenuPrincipal extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String menu = request.getParameter("menu");
-        String accion = request.getParameter("accion");
         String conductorId = request.getParameter("conductorId");
-        String vehiculoId = request.getParameter("vehiculoId");
+        Usuario usuario = (Usuario) request.getAttribute("usuario");
         
         if(menu.equals("PrincipalAgente")){
             request.getRequestDispatcher("MenuAgente.jsp").forward(request, response);
@@ -60,6 +57,15 @@ public class ControladorMenuPrincipal extends HttpServlet {
         
         if (menu.equals("Usuarios")) {
             request.getRequestDispatcher("Usuarios.jsp").forward(request, response);
+        }
+        
+        if (menu.equals("VehiculosConductor")) {
+            int id = Integer.valueOf(request.getParameter("conductorId"));
+            List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculosPorConductor(id);
+            request.setAttribute("vehiculos", listaVehiculos);
+            request.setAttribute("usuario", usuario);
+            
+            request.getRequestDispatcher("VehiculosConductor.jsp").forward(request, response);
         }
         
         if(menu.equals("Conductores")){

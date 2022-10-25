@@ -6,7 +6,7 @@
 
 <%@page import="java.util.List"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="Modelos.*" %>
+<%@page import="Modelos.*"%>
 <%@page import="java.util.AbstractList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -160,7 +160,7 @@
                     <div>
                         <div class="row filaParaInput">
                             <div class="col-2 col-form-label etiquetaDeInput">
-                                <label>Descripcion : </label>
+                                <label>Descripción : </label>
                             </div>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="txtDescripcion" value="<%=descripcion%>">
@@ -168,7 +168,7 @@
                         </div>
                         <div class="row filaParaInput">
                             <div class="col-2 col-form-label etiquetaDeInput">
-                                <label>Mont : </label>
+                                <label>Monto : </label>
                             </div>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="txtAmount" value="<%=amount%>">

@@ -1,8 +1,9 @@
 <%-- 
-    Document   : Agentes
-    Created on : 20/10/2022, 00:25:45
+    Document   : VehiculosConductor
+    Created on : 25/10/2022, 10:04:39
     Author     : alera
 --%>
+
 
 <%@page import="java.util.List"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -13,7 +14,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Agentes</title>
+        <title>Vehiculos</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
         <style>
             body {
@@ -123,43 +124,42 @@
     </head>
     <body>
         <%
-            Agente agente = (Agente) request.getAttribute("agente");
-            String nombre;
-            String apellidos;
-            String dpi;
-            String fechaNacimiento;
-            String telefono;
-            int idA;
+            String idConductor = request.getParameter("conductorId");
+            Vehiculo vehiculo = (Vehiculo) request.getAttribute("vehiculo");
+            Vehiculo vehiculoEnSesion = (Vehiculo) request.getSession().getAttribute("vehiculo");
 
-            if (agente != null) {
-                idA = agente.getId();
-                nombre = agente.getNombre();
-                apellidos = agente.getApellidos();
-                dpi = agente.getDpi();
-                fechaNacimiento = agente.getFechaNacimiento().toString();
-                telefono = agente.getTelefono();
+            String placa;
+            String color;
+            String linea;
+            String marca;
+            Integer conductorId;
+
+            if (vehiculo != null) {
+                placa = vehiculo.getPlaca();
+                color = vehiculo.getColor();
+                linea = vehiculo.getLinea();
+                marca = vehiculo.getMarca();
+                conductorId = vehiculo.getConductor();
             } else {
-                idA = request.getParameter("idA") != null ? Integer.parseInt(request.getParameter("idA")) : 0;
-                nombre = request.getParameter("nombre") != null ? nombre = request.getParameter("nombre") : "";
-                apellidos = request.getParameter("apellidos") != null ? apellidos = request.getParameter("apellidos") : "";
-                dpi = request.getParameter("dpi") != null ? dpi = request.getParameter("dpi") : "";
-                fechaNacimiento = request.getParameter("fechaNacimiento") != null ? fechaNacimiento = request.getParameter("fechaNacimiento") : "";
-                telefono = request.getParameter("telefono") != null ? fechaNacimiento = request.getParameter("telefono") : "";
+                placa = request.getParameter("placa") != null ? placa = request.getParameter("placa") : "";
+                color = request.getParameter("color") != null ? color = request.getParameter("color") : "";
+                linea = request.getParameter("linea") != null ? linea = request.getParameter("linea") : "";
+                marca = request.getParameter("marca") != null ? marca = request.getParameter("marca") : "";
+                conductorId = request.getParameter("conductor") != null ? Integer.valueOf(request.getParameter("conductor")) : 0;
             }
-
         %>
-        <h1>Agentes</h1>
+        <h1>Vehiculos del usuario</h1>
         <div class="contenedorFormulario">
             <div class="contenidoFormulario">
                 <%                    
                     String error = request.getParameter("error");
                     String errorEliminar = request.getParameter("errorEliminar");
-                    
+                    String id = request.getParameter("id");
                     if (error != null) {
-                        if (error.equals("dpiRepetido")) {
-                            out.println("<h1 class=" + "tituloAdvertencia" + ">El DPI ingresado ya existe en el sistema</h1>");
-                        } else if(error.equals("dpiNoIgual")){
-                            out.println("<h1 class=" + "tituloAdvertencia" + ">El DPI ingresado no es igual a la del agente seleccionado</h1>");
+                        if (error.equals("placaRepetida")) {
+                            out.println("<h1 class=" + "tituloAdvertencia" + ">La placa ingresada ya existe en el sistema</h1>");
+                        } else if(error.equals("placaNoIgual")){
+                            out.println("<h1 class=" + "tituloAdvertencia" + ">La placa ingresada no es igual a la del vehiculo seleccionado</h1>");
                         }else {
                             out.println("<h1 class=" + "tituloAdvertencia" + ">Debe completar todos los campos</h1>");
                         }
@@ -169,57 +169,75 @@
                          out.println("<h1 class=" + "tituloAdvertencia" + ">" + errorEliminar + "</h1>");
                     }
                 %>
-                <p>Ingrese la información solicitada para registrar un agente : </p>
-                <form action="ControladorAgente" method="POST">
+                <p>Ingrese la información solicitada para registrar un vehiculo : </p>
+                <form action="ControladorVehiculoConductor" method="POST">
                     <div>
                         <div class="row filaParaInput">
                             <div class="col-2 col-form-label etiquetaDeInput">
-                                <label>Nombres : </label>
+                                <label>Placa : </label>
                             </div>
                             <div class="col-8">
-                                <input type="text" class="form-control" name="txtNombre" value="<%=nombre%>">
+                                <input disabled type="text" class="form-control" name="txtPlaca" value="<%=placa%>">
                             </div>
                         </div>
                         <div class="row filaParaInput">
                             <div class="col-2 col-form-label etiquetaDeInput">
-                                <label>Apellidos : </label>
+                                <label>Color : </label>
                             </div>
                             <div class="col-8">
-                                <input type="text" class="form-control" name="txtApellidos" value="<%=apellidos%>">
+                                <input disabled type="text" class="form-control" name="txtColor" value="<%=color%>">
                             </div>
                         </div>
                         <div class="row filaParaInput">
                             <div class="col-2 col-form-label etiquetaDeInput">
-                                <label>DPI : </label>
+                                <label>Linea : </label>
                             </div>
                             <div class="col-8">
-                                <input type="text" class="form-control" name="txtDpi" value="<%=dpi%>">
+                                <input disabled type="text" class="form-control" name="txtLinea" value="<%=linea%>">
                             </div>
                         </div>
                         <div class="row filaParaInput">
                             <div class="col-2 col-form-label etiquetaDeInput">
-                                <label>Telefono : </label>
+                                <label>Marca : </label>
                             </div>
                             <div class="col-8">
-                                <input type="text" class="form-control" name="txtTelefono" value="<%=telefono%>">
+                                <input disabled type="text" class="form-control" name="txtMarca" value="<%=marca%>">
                             </div>
                         </div>
                         <div class="row filaParaInput">
-                            <div class="col-2 col-form-label etiquetaDeInput" style="width: 206px">
-                                <label>Fecha de nacimiento : </label>
-
+                            <div class="col-2 col-form-label etiquetaDeInput">
+                                <label class="form-label">Conductor </label>
                             </div>
-                            <div class="col-8" style="width: 365px">
-                                <input type="date" class="form-control" name="txtFechaNacimiento" value="<%=fechaNacimiento%>">
+                            <div class="col-8">
+                                <select disabled name="Conductor"  id="cmbConductor" class="form-control">
+                                    <%
+                                        ConductorDAO conductorDAO = new ConductorDAO();
+                                        List<Conductor> conductores = conductorDAO.listarConductores();
+                                        String selectedEmpty = (conductorId == 0) ? "selected" : "";
+                                        out.println("<option value='0'" + selectedEmpty + ">Seleccione un vehiculo</option>");
+                                        for (Conductor conductor : conductores) {
+                                            String selected = (conductorId == conductor.getId()) ? "selected" : "";
+                                            out.println("<option value=" + conductor.getId() + " " + selected + ">" + conductor.getNombres() + "</option>");
+                                        }
+                                    %>
+                                </select>
                             </div>
                         </div>
-                        
                     </div>    
 
-                    <input type="hidden" name="txtId" value="<%=idA%>">        
+                    <input type="hidden" name="txtId" value="${vehiculo.getId()}">        
+                    <input type="hidden" name="txtConductorId" value="${vehiculo.getConductor()}">  
                     <div class="contenedorBotonAgregar">
-                        <input type="submit" name="accion" value="Agregar" class="btn btn-dark botonAgregar">
-                        <input type="submit" name="accion" value="Actualizar" class="btn btn-dark botonAgregar" style="margin-left: 10px;">
+                        <%
+                            if (vehiculo != null) {
+                                                            
+                                out.println("<input type=" + "'submit'" + "name=" + "'accion'" + " value=" + "'Limpiar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
+
+                                out.println("<a class='btn btn-dark botonAgregar' href='ReporteSolvencia.jsp?id=" + id + "'>Reporte</a>");
+                            } else if (vehiculo == null) {
+                            }
+                        %>
+
                     </div>
                 </form>
             </div>
@@ -232,27 +250,26 @@
                     <thead>
                         <tr class="table-dark" style="text-align: center">
                             <th>ID</th>
-                            <th>Nombres</th>
-                            <th>Apellidos</th>
-                            <th>DPI</th>
-                            <th>Fecha de nacimiento</th>
-                            <th>Telefono</th>
+                            <th>Placa</th>
+                            <th>Color</th>
+                            <th>Linea</th>
+                            <th>Marca</th>
+                            <th>Conductor</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="agente" items="${agentes}">
+                        <c:forEach var="vehiculo" items="${vehiculos}">
                             <tr class="table-dark">
-                                <td>${agente.getId()}</td>
-                                <td>${agente.getNombre()}</td>
-                                <td>${agente.getApellidos()}</td>
-                                <td>${agente.getDpi()}</td>
-                                <td>${agente.getFechaNacimiento()}</td>
-                                <td>${agente.getTelefono()}</td>
+                                <td>${vehiculo.getId()}</td>
+                                <td>${vehiculo.getPlaca()}</td>
+                                <td>${vehiculo.getColor()}</td>
+                                <td>${vehiculo.getLinea()}</td>
+                                <td>${vehiculo.getMarca()}</td>
+                                <td>${vehiculo.getNombreConductor()}</td>
                                 <td class="columnaDeBotones">
                                     <div class="d-grid gap-2 d-md-block contenedorBotones">
-                                        <a class="btn btn-warning estiloEnlace" href="ControladorAgente?accion=Seleccionar&id=${agente.getId()}">Seleccionar</a>
-                                        <a class="btn btn-danger botones estiloEnlace2" href="ControladorAgente?accion=Eliminar&id=${agente.getId()}">Eliminar</a>
+                                        <a class="btn btn-warning estiloEnlace" href="ControladorVehiculoConductor?accion=Seleccionar&conductorId=${vehiculo.getConductor()}&id=${vehiculo.getId()}">Seleccionar</a>
                                     </div>
                                 </td>
                             </tr>

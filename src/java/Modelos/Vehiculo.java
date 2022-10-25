@@ -16,6 +16,7 @@ public class Vehiculo {
     private String linea;
     private String marca;
     private int conductor;
+    private String nombreConductor;
 
     public Vehiculo() {
     }
@@ -75,6 +76,14 @@ public class Vehiculo {
 
     public void setConductor(int conductor) {
         this.conductor = conductor;
+    }
+
+    public String getNombreConductor() {
+        return nombreConductor;
+    }
+
+    public void setNombreConductor(String nombreConductor) {
+        this.nombreConductor = nombreConductor;
     }
     
     

@@ -36,9 +36,9 @@ public class ControladorAgente extends HttpServlet{
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String accion = request.getParameter("accion");
-        int registro = (request.getParameter("registro") != null && !request.getParameter("registro").equals("")) ? Integer.valueOf(request.getParameter("registro")) : 0;
+
         int id =  (request.getParameter("txtId") != null && !request.getParameter("txtId").equals("")) ? Integer.valueOf(request.getParameter("txtId")) : 0;
-        Integer conductorId = request.getParameter("Conductor") != null ? Integer.valueOf(request.getParameter("Conductor")) : 0;
+
         
         if (accion.equals("Agregar")) {
 
@@ -155,10 +155,11 @@ public class ControladorAgente extends HttpServlet{
         }
         
         if (accion.equals("Eliminar")){
-            String error = agenteDAO.eliminarAgente(id);
+            int idDelete = Integer.parseInt(request.getParameter("id"));
+            agenteDAO.eliminarAgente(idDelete);
             List<Agente> listaAgente = agenteDAO.buscarAgentes();
             request.setAttribute("agentes", listaAgente);
-            request.getRequestDispatcher("Agentes.jsp?errorEliminar="+error).forward(request, response);
+            request.getRequestDispatcher("Agentes.jsp").forward(request, response);
         }
         
 

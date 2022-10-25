@@ -20,7 +20,6 @@ public class Conexion {
             if (connection != null) return connection;
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sistemainfraccionvehicular","root","");
-
             System.out.println("Conexión con éxito");
             
             return connection;

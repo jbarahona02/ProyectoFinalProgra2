@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author alera
  */
-@WebServlet(name = "ControladorVehiculo", urlPatterns = {"/ControladorVehiculo"})
-public class ControladorVehiculo extends HttpServlet{
+@WebServlet(name = "ControladorVehiculoConductor", urlPatterns = {"/ControladorVehiculoConductor"})
+public class ControladorVehiculoConductor extends HttpServlet{
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,6 +39,7 @@ public class ControladorVehiculo extends HttpServlet{
         int id =  (request.getParameter("txtId") != null && !request.getParameter("txtId").equals("")) ? Integer.valueOf(request.getParameter("txtId")) : 0;
         Integer conductorId = request.getParameter("Conductor") != null ? Integer.valueOf(request.getParameter("Conductor")) : 0;
         
+        
         if (accion.equals("Agregar")) {
 
             String placa = request.getParameter("txtPlaca");
@@ -55,7 +56,7 @@ public class ControladorVehiculo extends HttpServlet{
             if (!valida) {
                 List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
                 request.setAttribute("vehiculos", listaVehiculos);
-                request.getRequestDispatcher("Vehiculos.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&error=campos").forward(request, response);
+                request.getRequestDispatcher("VehiculosConductor.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&error=campos").forward(request, response);
                 return;
             }
 
@@ -63,21 +64,21 @@ public class ControladorVehiculo extends HttpServlet{
             if (validaVehiculo.getPlaca() != null) {
                 error = "Placa repetida";
                 request.setAttribute("vehiculo", validaVehiculo);
-                request.getRequestDispatcher("Vehiculos.jsp?error=placaRepetida").forward(request, response);
+                request.getRequestDispatcher("VehiculosConductor.jsp?error=placaRepetida").forward(request, response);
                 return;
             }
             
             if (error != "") {
                 List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
                 request.setAttribute("vehiculos", listaVehiculos);
-                request.getRequestDispatcher("Vehiculos.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&error=campos").forward(request, response);
+                request.getRequestDispatcher("VehiculosConductor.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&error=campos").forward(request, response);
                 return;
             }
 
             int resp = vehiculoDAO.crearVehiculo(placa, color, linea, marca, conductorId);
             List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
             request.setAttribute("vehiculos", listaVehiculos);
-            request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
+            request.getRequestDispatcher("VehiculosConductor.jsp").forward(request, response);
 
         }
         
@@ -85,16 +86,18 @@ public class ControladorVehiculo extends HttpServlet{
             Vehiculo vehiculoSeleccionado = vehiculoDAO.buscarVehiculo(Integer.parseInt(request.getParameter("id")));
             request.setAttribute("vehiculo", vehiculoSeleccionado);
 
-            List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
-                request.setAttribute("vehiculos", listaVehiculos);
+            Integer cId = Integer.valueOf(request.getParameter("conductorId"));
+            List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculosPorConductor(cId);
+            request.setAttribute("vehiculos", listaVehiculos);
 
-            request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
+            request.getRequestDispatcher("VehiculosConductor.jsp").forward(request, response);
         }
         
         if (accion.equals("Limpiar")) {
-             List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
-                request.setAttribute("vehiculos", listaVehiculos);
-            request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
+            Integer cId = Integer.valueOf(request.getParameter("txtConductorId"));
+            List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculosPorConductor(cId);
+            request.setAttribute("vehiculos", listaVehiculos);
+            request.getRequestDispatcher("VehiculosConductor.jsp").forward(request, response);
         }
 
         if (accion.equals("Actualizar")) {
@@ -113,7 +116,7 @@ public class ControladorVehiculo extends HttpServlet{
             if (!valida) {
                 List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
                 request.setAttribute("vehiculos", listaVehiculos);
-                request.getRequestDispatcher("Vehiculos.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&error=campos").forward(request, response);
+                request.getRequestDispatcher("VehiculosConductor.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&error=campos").forward(request, response);
                 return;
             }
 
@@ -125,7 +128,7 @@ public class ControladorVehiculo extends HttpServlet{
                 if (error != "") {
                     List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
                     request.setAttribute("vehiculos", listaVehiculos);
-                    request.getRequestDispatcher("Vehiculos.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&error=placaNoIgual").forward(request, response);
+                    request.getRequestDispatcher("VehiculosConductor.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&error=placaNoIgual").forward(request, response);
                     return;
                 }
             }
@@ -133,14 +136,14 @@ public class ControladorVehiculo extends HttpServlet{
             if (error != "") {
                 List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
                 request.setAttribute("vehiculos", listaVehiculos);
-                request.getRequestDispatcher("Vehiculos.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&error=campos").forward(request, response);
+                request.getRequestDispatcher("VehiculosConductor.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&error=campos").forward(request, response);
                 return;
             }
 
             int resp = vehiculoDAO.actualizarVehiculo(id, placa, color, linea, marca, conductorId);
             List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
             request.setAttribute("vehiculos", listaVehiculos);
-            request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
+            request.getRequestDispatcher("VehiculosConductor.jsp").forward(request, response);
 
         }
         if (accion.equals("Eliminar")){
@@ -148,7 +151,7 @@ public class ControladorVehiculo extends HttpServlet{
             vehiculoDAO.eliminarVehiculo(idDelete);
             List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
             request.setAttribute("vehiculos", listaVehiculos);
-            request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
+            request.getRequestDispatcher("VehiculosConductor.jsp").forward(request, response);
         }
 
         try (PrintWriter out = response.getWriter()) {
