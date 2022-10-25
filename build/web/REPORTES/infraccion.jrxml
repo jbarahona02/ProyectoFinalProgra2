@@ -118,13 +118,6 @@ where i.id = $P{ID};]]>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
 			</line>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="92" height="20"/>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{Infraccion}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
 				<reportElement x="92" y="0" width="92" height="20"/>
 				<textElement>
 					<font size="14"/>
@@ -158,6 +151,13 @@ where i.id = $P{ID};]]>
 					<font size="14"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[new java.text.SimpleDateFormat("dd/MM/YYYY").format($F{FechaPago})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="92" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{Infraccion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
