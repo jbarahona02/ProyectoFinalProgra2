@@ -90,6 +90,12 @@ public class ControladorVehiculo extends HttpServlet{
 
             request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
         }
+        
+        if (accion.equals("Limpiar")) {
+             List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
+                request.setAttribute("vehiculos", listaVehiculos);
+            request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
+        }
 
         if (accion.equals("Actualizar")) {
             

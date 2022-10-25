@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="idVehiculo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+		 vehiculo.id AS Id,
+		 vehiculo.placa AS Placa,
+		 c.nombres as Conductor,
+		infraccion.total as Total,
+		infraccion.fecha_creacion AS Fehca_infraccion,
+ a.nombre as Agente,
+		 IF(infraccion.estado = 1, "Pagado", "No Pagado") AS Estado_infraccion
+	FROM
+		 vehiculo vehiculo 
+         INNER JOIN infraccion infraccion ON vehiculo.id = infraccion.vehiculo 
+JOIN agente a on infraccion.agente = a.id 
+         JOIN conductor c on vehiculo.conductor = c.id Where vehiculo.id = $P{idVehiculo} && infraccion.estado = 0;]]>
+	</queryString>
+	<field name="Id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Placa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Conductor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+        <field name="Agente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Fehca_infraccion" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Estado_infraccion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement x="20" y="20" width="357" height="43" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Solvencia de vehiculo]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="100">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="120" height="40" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="16" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Conductor: ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="120" y="0" width="435" height="40"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="14" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Conductor}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="120" y="40" width="435" height="40"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="14" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Placa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="40" width="120" height="40" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Placa: ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="178" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de la infraccion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="178" y="0" width="179" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado de la infraccion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="357" y="0" width="198" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Agente a cargo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="178" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.text.SimpleDateFormat("dd/MM/YYYY").format($F{Fehca_infraccion})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="178" y="0" width="179" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Estado_infraccion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="357" y="0" width="179" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Agente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="232" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.text.SimpleDateFormat("dd 'de' MMMM 'del' yyyy").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
