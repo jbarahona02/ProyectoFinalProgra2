@@ -117,10 +117,11 @@ public class ControladorSancion extends HttpServlet{
         }
         
         if (accion.equals("Eliminar")){
-            String error = sancionDAO.eliminarSancion(id);
+            int idDelete = Integer.parseInt(request.getParameter("id"));
+            sancionDAO.eliminarSancion(idDelete);
             List<Sancion> listaSanciones = sancionDAO.buscarSanciones();
             request.setAttribute("sanciones", listaSanciones);
-            request.getRequestDispatcher("Sancion.jsp?errorEliminar="+error).forward(request, response);
+            request.getRequestDispatcher("Sancion.jsp").forward(request, response);
         }
         
 

@@ -35,7 +35,7 @@ public class ControladorVehiculo extends HttpServlet{
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String accion = request.getParameter("accion");
-        int registro = (request.getParameter("registro") != null && !request.getParameter("registro").equals("")) ? Integer.valueOf(request.getParameter("registro")) : 0;
+
         int id =  (request.getParameter("txtId") != null && !request.getParameter("txtId").equals("")) ? Integer.valueOf(request.getParameter("txtId")) : 0;
         Integer conductorId = request.getParameter("Conductor") != null ? Integer.valueOf(request.getParameter("Conductor")) : 0;
         
@@ -143,14 +143,13 @@ public class ControladorVehiculo extends HttpServlet{
             request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
 
         }
-        
         if (accion.equals("Eliminar")){
-            String error = vehiculoDAO.eliminarVehiculo(id);
+            int idDelete = Integer.parseInt(request.getParameter("id"));
+            vehiculoDAO.eliminarVehiculo(idDelete);
             List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
             request.setAttribute("vehiculos", listaVehiculos);
-            request.getRequestDispatcher("Vehiculos.jsp?errorEliminar="+error).forward(request, response);
+            request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
         }
-        
 
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */

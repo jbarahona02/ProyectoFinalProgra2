@@ -160,7 +160,7 @@
                     <div>
                         <div class="row filaParaInput">
                             <div class="col-2 col-form-label etiquetaDeInput">
-                                <label>Descripcion : </label>
+                                <label>Descripción : </label>
                             </div>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="txtDescripcion" value="<%=descripcion%>">
