@@ -69,6 +69,33 @@ public class VehiculoDAO {
         }
     }
     
+        public List<Vehiculo> buscarVehiculosPorConductor(int id) {
+        List<Vehiculo> vehiculos = new ArrayList<>();
+        String query = "SELECT * FROM vehiculo where vehiculo.conductor = ?";
+        try {
+            connection = conexionDB.getConexion();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            resultadoSentencia = preparedStatement.executeQuery();
+
+            while (resultadoSentencia.next()) {
+                Vehiculo vehiculo = new Vehiculo();
+                vehiculo.setId(resultadoSentencia.getInt("id"));
+                vehiculo.setPlaca(resultadoSentencia.getString("placa"));
+                vehiculo.setColor(resultadoSentencia.getString("color"));
+                vehiculo.setLinea(resultadoSentencia.getString("linea"));
+                vehiculo.setMarca(resultadoSentencia.getString("marca"));
+                vehiculo.setConductor(resultadoSentencia.getInt("conductor"));
+                vehiculos.add(vehiculo);
+            }
+
+            return vehiculos;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
     public Vehiculo buscarVehiculo(int id) {
         Vehiculo vehiculo = new Vehiculo();
         String sql = "SELECT *FROM vehiculo where id = ?";
