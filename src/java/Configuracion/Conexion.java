@@ -19,12 +19,7 @@ public class Conexion {
        try {
             if (connection != null) return connection;
             Class.forName("com.mysql.jdbc.Driver");
-<<<<<<< HEAD
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project_2","root","");
-=======
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project_2","root","Password!234");
->>>>>>> cd2d1ddb1af9e3784e03d20857b4327fab47f337
-
             System.out.println("Conexión con éxito");
             
             return connection;

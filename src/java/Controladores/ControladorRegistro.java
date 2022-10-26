@@ -87,7 +87,7 @@ public class ControladorRegistro extends HttpServlet {
                     usuarioDAO.crearUsuario(email, password);
                     int id = conductorDAO.obtenerIdConLicencia(licenciaOrDpi);
                     usuarioDAO.actualizarUsuario(email, 1, id);
-                     request.getRequestDispatcher("ControladorMenuPrincipal?menu=Principal").forward(request, response);
+                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 }
             } else {
                 error = agenteDAO.validarDpi(licenciaOrDpi);
@@ -99,7 +99,7 @@ public class ControladorRegistro extends HttpServlet {
                     usuarioDAO.crearUsuario(email, password);
                     int id = agenteDAO.getIdConDPI(licenciaOrDpi);
                     usuarioDAO.actualizarUsuario(email, 2, id);
-                     request.getRequestDispatcher("ControladorMenuPrincipal?menu=Principal").forward(request, response);
+                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 }
             }
         }
