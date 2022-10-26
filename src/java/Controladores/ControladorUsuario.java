@@ -37,11 +37,16 @@ public class ControladorUsuario extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String accion = request.getParameter("btnAccion");
         int registro = (request.getParameter("registro") != null && !request.getParameter("registro").equals("")) ? Integer.valueOf(request.getParameter("registro")) : 0;
-        int id =  (request.getParameter("txtId") != null && !request.getParameter("txtId").equals("")) ? Integer.valueOf(request.getParameter("txtId")) : 0;
+        int id = (request.getParameter("txtId") != null && !request.getParameter("txtId").equals("")) ? Integer.valueOf(request.getParameter("txtId")) : 0;
 
         if (accion.equals("Seleccionar")) {
             Usuario usuario = usuarioDAO.buscarUsuario(registro);
             request.setAttribute("usuario", usuario);
+            request.getRequestDispatcher("Usuarios.jsp").forward(request, response);
+        }
+
+        if (accion.equals("Limpiar")) {
+            request.setAttribute("usuario", null);
             request.getRequestDispatcher("Usuarios.jsp").forward(request, response);
         }
 
@@ -57,23 +62,76 @@ public class ControladorUsuario extends HttpServlet {
                     return;
                 }
 
-                
                 usuarioDAO.actualizarUsuario(txtEmail, id);
                 Usuario usuario = usuarioDAO.buscarUsuario(id);
                 request.setAttribute("usuario", usuario);
                 request.getRequestDispatcher("Usuarios.jsp").forward(request, response);
                 return;
             }
-            
-            
-             request.getRequestDispatcher("Usuarios.jsp?error=error").forward(request, response);
+
+            request.getRequestDispatcher("Usuarios.jsp?error=error").forward(request, response);
         }
-        
+
         if (accion.equals("Eliminar")) {
-             String error = usuarioDAO.eliminarUsuario(registro);
-             request.getRequestDispatcher("Usuarios.jsp?errorEliminar="+error).forward(request, response);
+            String error = usuarioDAO.eliminarUsuario(registro);
+            request.getRequestDispatcher("Usuarios.jsp?errorEliminar=" + error).forward(request, response);
         }
-        
+
+        if (accion.equals("Seleccionar Tipo")) {
+            String tipoUsuario = request.getParameter("Tipo");
+            String email = request.getParameter("txtEmail");
+            String contrasenia = request.getParameter("txtContrasenia");
+            if (tipoUsuario == null) {
+                request.getRequestDispatcher("Usuarios.jsp?error=tipoUsuario").forward(request, response);
+                return;
+            }
+
+            if (tipoUsuario.trim().length() == 0) {
+                request.getRequestDispatcher("Usuarios.jsp?error=tipoUsuario").forward(request, response);
+                return;
+            }
+
+            System.out.println("Tipo " + tipoUsuario);
+            request.getSession().setAttribute("tipoUsuario", tipoUsuario);
+            request.getRequestDispatcher("Usuarios.jsp?email=" + email + "&contrasenia=" + contrasenia).forward(request, response);
+            return;
+        }
+
+        if (accion.equals("Agregar")) {
+            String email = request.getParameter("txtEmail") == null ? "" : request.getParameter("txtEmail");
+            String contrasenia = request.getParameter("txtContrasenia") == null ? "" : request.getParameter("txtContrasenia");
+            String tipo = (String) request.getSession().getAttribute("tipoUsuario");
+            String conductor = "0";
+            String agente = "0";
+            if (tipo != null && tipo.equals("1")) {
+                conductor = request.getParameter("Conductor") == null ? "0" : request.getParameter("Conductor");
+            } else {
+                agente = request.getParameter("Agente") == null ? "0" : request.getParameter("Agente");
+            }
+
+            boolean validaNull = email == null || contrasenia == null || (tipo.equals("1") && conductor == null) || (tipo.equals("2") && agente == null);
+            if (validaNull) {
+                request.getRequestDispatcher("Usuarios.jsp?email=" + email + "&contrasenia=" + contrasenia + "&agente=" + agente + "&conductor=" + conductor + "&error=errorEmpty").forward(request, response);
+                return;
+            }
+
+            boolean validaEmpty = email.trim().length() == 0 || contrasenia.trim().length() == 0 || (tipo.equals("1") && conductor.trim().length() == 0) || (tipo.equals("2") && email.trim().length() == 0);
+            if (validaEmpty) {
+                request.getRequestDispatcher("Usuarios.jsp?email=" + email + "&contrasenia=" + contrasenia + "&agente=" + agente + "&conductor=" + conductor + "&error=errorEmpty").forward(request, response);
+                return;
+            }
+
+            Usuario validaUser = usuarioDAO.validarUsuarioConEmail(email);
+            if (validaUser.getEmail() != null) {
+                request.getRequestDispatcher("Usuarios.jsp?email=" + email + "&contrasenia=" + contrasenia + "&agente=" + agente + "&conductor=" + conductor + "&error=emailRepetido").forward(request, response);
+                return;
+            }
+
+            int asociado = tipo.equals("1") ? Integer.valueOf(conductor) : Integer.valueOf(agente);
+            usuarioDAO.crearUsuarioAsociado(email, contrasenia, asociado, tipo);
+            request.getSession().setAttribute("tipoUsuario", null);
+            request.getRequestDispatcher("Usuarios.jsp").forward(request, response);
+        }
 
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Modelos.UsuarioDAO;
 import Modelos.Usuario;
+
 /**
  *
  * @author Javier Barahona
@@ -30,39 +31,39 @@ public class ControladorInicioSesion extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     UsuarioDAO usuarioDAO = new UsuarioDAO();
     Usuario usuarioIngresado = new Usuario();
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String accion = request.getParameter("btnIniciarSesion") != null ? request.getParameter("btnIniciarSesion") : request.getParameter("btnCerrarSesion");
-      
-        if (accion.equals("Ingresar")){
+
+        if (accion.equals("Ingresar")) {
             String email = request.getParameter("txtCorreo");
             String contrasenia = request.getParameter("txtContrasenia");
-            
+
             boolean validar = (email != null && !email.trim().equals(""))
-                               && (contrasenia != null && !contrasenia.trim().equals(""));
-            
-            if(!validar){
+                    && (contrasenia != null && !contrasenia.trim().equals(""));
+
+            if (!validar) {
                 request.getRequestDispatcher("index.jsp?error=campos").forward(request, response);
                 return;
             }
-            
-            usuarioIngresado = usuarioDAO.validarUsuario(email, contrasenia);
 
-            if(usuarioIngresado.getEmail() != null){
+            usuarioIngresado = usuarioDAO.validarUsuario(email, contrasenia);
+            request.getSession().setAttribute("userId", usuarioIngresado.getId());
+            if (usuarioIngresado.getEmail() != null) {
                 request.setAttribute("usuario", usuarioIngresado);
-                
-                if(usuarioIngresado.getAgente() != 0){
-                    request.getRequestDispatcher("ControladorMenuPrincipal?menu=PrincipalAgente&conductorId="+String.valueOf(usuarioIngresado.getAgente())).forward(request, response);
+
+                if (usuarioIngresado.getAgente() != 0) {
+                    request.getRequestDispatcher("ControladorMenuPrincipal?menu=PrincipalAgente&conductorId=" + String.valueOf(usuarioIngresado.getAgente())).forward(request, response);
                 } else {
-                    request.getRequestDispatcher("ControladorMenuPrincipal?menu=PrincipalConductor&conductorId="+String.valueOf(usuarioIngresado.getConductor())).forward(request, response);
+                       System.out.println("USER INICIAL " + request.getSession().getAttribute("userId"));
+                    request.getRequestDispatcher("ControladorMenuPrincipal?menu=PrincipalConductor&conductorId=" + String.valueOf(usuarioIngresado.getConductor())).forward(request, response);
                 }
-            }  else {
+            } else {
                 request.getRequestDispatcher("index.jsp?error=usuario").forward(request, response);
             }
         } else if (accion.equals("Registrarse")) {
@@ -70,15 +71,13 @@ public class ControladorInicioSesion extends HttpServlet {
         } else {
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
-        
 
-        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorInicioSesion</title>");            
+            out.println("<title>Servlet ControladorInicioSesion</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ControladorInicioSesion at " + request.getContextPath() + "</h1>");

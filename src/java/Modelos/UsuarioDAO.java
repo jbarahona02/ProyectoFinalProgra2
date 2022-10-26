@@ -46,6 +46,7 @@ public class UsuarioDAO {
             System.err.println(ex.getMessage());
         }
 
+        System.out.println(usuarioIngresado.getId());
         return usuarioIngresado;
     }
 
@@ -84,6 +85,29 @@ public class UsuarioDAO {
             preparedStatement.setString(2, contrasenia);
             preparedStatement.executeUpdate();
 
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+    
+    public int crearUsuarioAsociado(String email, String contrasenia, int asociado, String tipo) {
+        String sql =  "";
+        if (tipo.equals("1")) {
+            sql = "INSERT INTO usuario (email, contrasenia, conductor) values(?, ?, ?)";
+        } else {
+            sql = "INSERT INTO usuario (email, contrasenia, agente) values(?, ?, ?)";
+        }
+                
+        try {
+            connection = conexionDB.getConexion();
+            preparedStatement = connection.prepareStatement(sql);
+            
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, contrasenia);
+            preparedStatement.setInt(3, asociado);
+            preparedStatement.executeUpdate();
+            
             return 1;
         } catch (Exception e) {
             return 0;
@@ -182,6 +206,7 @@ public class UsuarioDAO {
                 usuario.setAgenteNombre(resultadoSentencia.getString("agenteNombre"));
             }
 
+            System.out.println(usuario.getEmail());
             return usuario;
         } catch (Exception e) {
             return null;

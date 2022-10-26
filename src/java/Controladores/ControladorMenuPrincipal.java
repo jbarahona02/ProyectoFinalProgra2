@@ -40,7 +40,7 @@ public class ControladorMenuPrincipal extends HttpServlet {
     VehiculoDAO vehiculoDAO = new VehiculoDAO();
     AgenteDAO agenteDAO = new AgenteDAO();
     SancionDAO sancionDAO = new SancionDAO();
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -49,71 +49,80 @@ public class ControladorMenuPrincipal extends HttpServlet {
         String accion = request.getParameter("accion");
         String conductorId = request.getParameter("conductorId");
         String vehiculoId = request.getParameter("vehiculoId");
-        
-        if(menu.equals("PrincipalAgente")){
+
+        if (menu.equals("PrincipalAgente")) {
             request.getRequestDispatcher("MenuAgente.jsp").forward(request, response);
         }
 
         if (menu.equals("PrincipalConductor")) {
             request.getRequestDispatcher("MenuConductor.jsp").forward(request, response);
         }
-        
+
         if (menu.equals("Usuarios")) {
+            request.getSession().setAttribute("conductor", null);
+            request.getSession().setAttribute("tipoUsuario", null);
+            String conductor = request.getParameter("conductorId");
+            
+            if (conductor != null) {
+                request.getSession().setAttribute("conductor", conductor);
+            }
+            
+            
             request.getRequestDispatcher("Usuarios.jsp").forward(request, response);
         }
-        
-        if(menu.equals("Conductores")){
+
+        if (menu.equals("Conductores")) {
             List<Conductor> listaConductores = conductorDAO.listarConductores();
             request.setAttribute("conductores", listaConductores);
 
             request.getRequestDispatcher("Conductores.jsp").forward(request, response);
         }
 
-        if(menu.equals("Pagos")){
+        if (menu.equals("Pagos")) {
             List<Pago> listaPagos = pagoDAO.listarPagosDelConductor(Integer.parseInt(conductorId));
-            request.setAttribute("conductorId",conductorId);
-            request.setAttribute("pagos",listaPagos);
-                
+            request.setAttribute("conductorId", conductorId);
+            request.setAttribute("pagos", listaPagos);
+
             request.getRequestDispatcher("Pagos.jsp").forward(request, response);
         }
-        
+
         if (menu.equals("Infracciones")) {
             request.getSession().setAttribute("sanciones-infraccion", null);
             request.getSession().setAttribute("infraccion", null);
             request.getSession().setAttribute("conductor", null);
-            
+
             String conductor = request.getParameter("conductorId");
             if (conductor != null) {
                 request.getSession().setAttribute("conductor", conductor);
             }
-            
+
             request.getRequestDispatcher("Infracciones.jsp").forward(request, response);
         }
-        
+
         if (menu.equals("Vehiculos")) {
             List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
             request.setAttribute("vehiculos", listaVehiculos);
             request.setAttribute("usuario", usuario);
-                
+
             request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
         }
-        
+
         if (menu.equals("Agentes")) {
             List<Agente> listaAgentes = agenteDAO.buscarAgentes();
             request.setAttribute("agentes", listaAgentes);
             request.setAttribute("usuario", usuario);
-                
+
             request.getRequestDispatcher("Agentes.jsp").forward(request, response);
         }
-        
+
         if (menu.equals("Sanciones")) {
             List<Sancion> listaSanciones = sancionDAO.buscarSanciones();
             request.setAttribute("sanciones", listaSanciones);
             request.setAttribute("usuario", usuario);
-                
+
             request.getRequestDispatcher("Sancion.jsp").forward(request, response);
         }
-        
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");

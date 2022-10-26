@@ -131,7 +131,7 @@ public class ControladorInfraccion extends HttpServlet {
         }
 
         if (accion.equals("Limpiar")) {
-             request.getSession().setAttribute("sanciones-infraccion", null);
+            request.getSession().setAttribute("sanciones-infraccion", null);
             request.getSession().setAttribute("infraccion", null);
             request.getRequestDispatcher("Infracciones.jsp?Vehiculo=0&Agente=0").forward(request, response);
         }

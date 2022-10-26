@@ -90,6 +90,13 @@
             .contenedorBotones {
                 text-align: center;
             }
+            
+            .tituloAdvertencia {
+                font-weight: bold;
+                color: red;
+                font-size: 17px;
+                text-align: center;
+            }
 
             .botones {
                 width: 90px;
@@ -203,13 +210,15 @@
 
                     <div class="contenedorBotonAgregar">
                         <%
-                            if (id != null && id != "" && conductor == null) {
-                                if (infraccionEnSession != null && !infraccionEnSession.isEstado()) {
+                            if (id != null && id != "") {
+                                if (conductor == null) {
+                                  if (infraccionEnSession != null && !infraccionEnSession.isEstado()) {
                                     out.println("<input type=" + "'submit'" + "name=" + "'btnAccion'" + " value=" + "'Actualizar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
+                                    }
                                 }
 
-                                out.println("<input type=" + "'submit'" + "name=" + "'btnAccion'" + " value=" + "'Limpiar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
 
+                                out.println("<input type=" + "'submit'" + "name=" + "'btnAccion'" + " value=" + "'Limpiar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
                                 out.println("<a class='btn btn-dark botonAgregar' href='ReporteInfraccion.jsp?id=" + id + "'>Reporte</a>");
                             } else if (conductor == null) {
                                 out.println("<input type=" + "'submit'" + "  name=" + "'btnAccion'" + " value=" + "'Agregar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
@@ -247,7 +256,9 @@
                                 out.println("<th>Total</th>");
                                 out.println("<th>Agente</th>");
                                 out.println("<th>Vehiculos</th>");
-                                out.println("<th>Acciones</th>");
+                                if (conductor == null) {
+                                  out.println("<th>Acciones</th>");   
+                                }
                             }
 
                         %> 
@@ -262,7 +273,7 @@
                                     out.println("<td>" + detalle.getSancionDescripcion() + "</td>");
                                     out.println("<td>" + detalle.getSancionMonto() + "</td>");
 
-                                    if (!infraccionEnSession.isEstado()) {
+                                    if (!infraccionEnSession.isEstado() && conductor == null) {
                                         out.println("<div class=" + "'d-grid gap-2 d-md-block contenedorBotones'" + ">");
                                         out.println("<td class=" + "'columnaDeBotones'" + ">");
                                         out.println("<a href='ControladorInfraccion?registro=" + detalle.getInfraccion() + "&btnAccion=EliminarDetalle&registroDetalle=" + detalle.getId() + "'  class='btn btn-danger' >Eliminar</a>");
@@ -281,9 +292,6 @@
                                 out.println("<td>" + sancionEnSession.getId() + "</td>");
                                 out.println("<td>" + sancionEnSession.getDescripcion() + "</td>");
                                 out.println("<td>" + sancionEnSession.getAmount() + "</td>");
-                                if (infraccionEnSession != null && infraccionEnSession.getId() != 0 && !infraccionEnSession.isEstado()) {
-
-                                }
                                 out.println("<tr>");
                                 out.println("</tr>");
                             }
@@ -311,7 +319,7 @@
                                     out.println("<td class=" + "'columnaDeBotones'" + ">");
                                     out.println("<div class=" + "'d-grid gap-2 d-md-block contenedorBotones'" + ">");
                                     out.println(" <a href='ControladorInfraccion?registro=" + infraccion.getId() + "&btnAccion=Seleccionar' class='btn btn-warning estiloEnlace' >Seleccionar</a>");
-                                    if (!infraccion.isEstado()) {
+                                    if (!infraccion.isEstado() && conductor == null) {
                                         out.println("<a href='ControladorInfraccion?registro=" + infraccion.getId() + "&btnAccion=Eliminar' class='btn btn-danger estiloEnlace2' >Eliminar</a>");
                                     }
                                     out.println("</div>");

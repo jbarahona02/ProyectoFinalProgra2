@@ -68,13 +68,13 @@
         </style>
     </head>
     <body>
-        <h1 class="titulo">Sistema de infracción vehicular</h1>
+        <h1 class="titulo">Sistema de infracción vehicular</h1> 
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse menuDeOpciones">
                     <ul class="navbar-nav">
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light"  onClick="newSite('ControladorMenuPrincipal?menu=Usuarios')">Usuario</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light"  onClick="newSite('ControladorMenuPrincipal?menu=Usuarios&conductorId=${usuario.getConductor()}')">Usuario</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
                             <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" onClick="newSite('ControladorMenuPrincipal?menu=Vehiculos')">Vehículo</a>

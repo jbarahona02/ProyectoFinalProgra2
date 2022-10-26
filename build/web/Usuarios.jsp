@@ -77,6 +77,12 @@
                 margin-top: 20px;
             }
 
+            .botonAgregar2 {
+                width: 200px;
+                font-size: 17px;
+                margin-top: 20px;
+            }
+
             .contenedorTabla {
                 display: flex; 
                 justify-content: center;
@@ -126,59 +132,119 @@
     </head>
     <body>
         <%
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
             Usuario usuario = (Usuario) request.getAttribute("usuario");
-            String email;
+            String email, contrasenia = "";
             int agente;
             int conductor;
+            String tipoUsuario = (String) request.getSession().getAttribute("tipoUsuario");
+            System.out.println("tipoUsuario pantalla " + tipoUsuario);
+            int id = 0;
 
             if (usuario != null) {
+                id = usuario.getId();
                 email = usuario.getEmail();
                 agente = usuario.getAgente();
                 conductor = usuario.getConductor();
             } else {
                 email = request.getParameter("email") != null ? request.getParameter("email") : "";
+                contrasenia = request.getParameter("contrasenia") != null ? request.getParameter("contrasenia") : "";
                 agente = request.getParameter("agente") != null ? Integer.valueOf(request.getParameter("agente")) : 0;
                 conductor = request.getParameter("conductor") != null ? Integer.valueOf(request.getParameter("conductor")) : 0;
             }
 
-        %>
-        <h1>Usuarios</h1>
-        <div class="contenedorFormulario">
-            <div class="contenidoFormulario">
-                <%                   
-                    String error = request.getParameter("error");
-                    String errorEliminar = request.getParameter("errorEliminar");
+            String conductorMenu = (String) request.getSession().getAttribute("conductor");
+            Integer idUser = (Integer) request.getSession().getAttribute("userId");
+            
 
-                    if (error != null) {
-                        if (error.equals("emailRepetido")) {
-                            out.println("<h1 class=" + "tituloAdvertencia" + ">El correo ingresado ya existe en el sistema</h1>");
-                        } else {
-                            out.println("<h1 class=" + "tituloAdvertencia" + ">Debe completar todos los campos</h1>");
-                        }
-                    }
-                    
-                    if (errorEliminar != null) {
-                         out.println("<h1 class=" + "tituloAdvertencia" + ">" + errorEliminar + "</h1>");
-                    }
-                %>
-                <p>Información del usuario: </p>
-                <form action="ControladorUsuario" method="POST">
+            Usuario usuarioConductor = null;
+            if (idUser != null && conductorMenu != null) {
+                System.out.println("ID EN PANTALLA " + idUser);
+                usuarioConductor = usuarioDAO.buscarUsuario(idUser);
+                id = usuarioConductor.getId();
+                usuario = null;
+            }
+
+        %>
+
+
+        <div>
+
+
+            <h1>Usuarios</h1>
+            <div>
+                <div class="contenedorFormulario">
                     <div>
-                        <div class="row filaParaInput">
-                            <div class="col-2 col-form-label etiquetaDeInput">
-                                <label>Correo : </label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" name="txtEmail" value="<%=email%>">
-                            </div>
-                        </div>
-                        <div class="row filaParaInput">
-                            <div class="col-2 col-form-label etiquetaDeInput">
-                                <label>Agente: </label>
-                            </div>
-                            <div class="col-8">
-                                <select name="Agente" id="cmbAgente" class="form-control" disabled>
+
+                        <div class="contenidoFormulario">
+
+                            <%                                String error = request.getParameter("error");
+                                String errorEliminar = request.getParameter("errorEliminar");
+
+                                if (error != null) {
+                                    if (error.equals("emailRepetido")) {
+                                        out.println("<h1 class=" + "tituloAdvertencia" + ">El correo ingresado ya existe en el sistema</h1>");
+                                    } else if (error.equals("tipoUsuario")) {
+                                        out.println("<h1 class=" + "tituloAdvertencia" + ">Seleccione tipo de usuario</h1>");
+                                    } else {
+                                        out.println("<h1 class=" + "tituloAdvertencia" + ">Debe completar todos los campos</h1>");
+                                    }
+                                }
+
+                                if (errorEliminar != null) {
+                                    out.println("<h1 class=" + "tituloAdvertencia" + ">" + errorEliminar + "</h1>");
+                                }
+                            %>
+
+                            <p>Información del usuario: </p>
+                            <form action="ControladorUsuario" method="POST">
+                                <div class="row filaParaInput">
+                                    <div class="col-2 col-form-label etiquetaDeInput">
+                                        <label>Correo : </label>
+                                    </div>
+
                                     <%
+                                        String disabled = (conductorMenu == null) ? "" : "disabled";
+                                        String disabledUpdate = "";
+                                        if (conductorMenu == null && usuario != null && usuario.getId() != 0) {
+                                            disabledUpdate = "disabled";
+                                        }
+                                        if (conductorMenu != null) {
+                                            System.out.println(usuarioConductor.getEmail());
+                                            email = usuarioConductor.getEmail();
+                                        }
+                                        out.println("<div class='col-8'>");
+                                        out.println("<input type='text' class='form-control' name='txtEmail' value='" + email + "'>");
+                                        out.println("</div>");
+                                    %>
+                                </div>
+
+                                <%
+                                    if (conductorMenu == null && usuario == null) {
+                                        out.println("<div class='row filaParaInput'>");
+
+                                        out.println("<div class='col-2 col-form-label etiquetaDeInput'>");
+                                        out.println("<label>Contraseña : </label>");
+                                        out.println("</div>");
+
+                                        out.println("<div class='col-8'>");
+                                        out.println("<input type='text' class='form-control' name='txtContrasenia' value='" + contrasenia + "'>");
+                                        out.println("</div>");
+
+                                        out.println("</div>");
+                                    }
+                                %>
+
+                                <%
+                                    if ((tipoUsuario != null && tipoUsuario.equals("2")) || (usuario != null && usuario.getAgente() != 0)) {
+                                        out.println("<div class='row filaParaInput'>");
+                                        out.println("<div class='col-2 col-form-label etiquetaDeInput'>");
+                                        out.println("<label>Agente : </label>");
+                                        out.println("</div>");
+
+                                        out.println("<div class='col-8'>");
+
+                                        out.println("<select name='Agente' id='cmbAgente' class='form-control' " + disabled + " " + disabledUpdate + ">");
                                         AgenteDAO agenteDAO = new AgenteDAO();
                                         List<Agente> agentes = agenteDAO.buscarAgentes();
 
@@ -189,80 +255,135 @@
                                             String selected = (agente == item.getId()) ? "selected" : "";
                                             out.println("<option value=" + item.getId() + " " + selected + ">" + item.getNombre() + " " + item.getApellidos() + "</option>");
                                         }
-                                    %>
-                                </select>
-                            </div>
-                        </div>
 
-                        <div class="row filaParaInput">
-                            <div class="col-2 col-form-label etiquetaDeInput">
-                                <label>Conductor: </label>
-                            </div>
-                            <div class="col-8">
-                                <select name="Agente" id="cmbAgente" class=" form-control" disabled>
-                                    <%
+                                        out.println("</select>");
+
+                                        out.println("</div>");
+                                        out.println("</div>");
+                                    }
+                                %>
+
+                                <%
+                                    if ((tipoUsuario != null && tipoUsuario.equals("1")) || (usuario != null && usuario.getConductor() != 0) || (usuarioConductor != null && usuarioConductor.getConductor() != 0)) {
+                                        out.println("<div class='row filaParaInput'>");
+                                        out.println("<div class='col-2 col-form-label etiquetaDeInput'>");
+                                        out.println("<label>Conductor : </label>");
+                                        out.println("</div>");
+
+                                        out.println("<div class='col-8'>");
+
+                                        out.println("<select name='Conductor' id='cmbConductor' class='form-control' " + disabled + " " + disabledUpdate + ">");
+
                                         ConductorDAO conductorDAO = new ConductorDAO();
                                         List<Conductor> conductores = conductorDAO.listarConductores();
 
-                                        selectedEmpty = (conductor == 0) ? "selected" : "";
+                                        String selectedEmpty = (conductor == 0) ? "selected" : "";
                                         out.println("<option value='0'" + selectedEmpty + " disabled>No hay inforamción</option>");
+
+                                        if (conductorMenu != null) {
+                                            conductor = usuarioConductor.getConductor();
+                                        }
 
                                         for (Conductor item : conductores) {
                                             String selected = (conductor == item.getId()) ? "selected" : "";
-                                            out.println("<option value=" + item.getId() + " " + selected + " disabled>" + item.getNombres() + " " + item.getApellidos() + "</option>");
+                                            out.println("<option value=" + item.getId() + " " + selected + ">" + item.getNombres() + " " + item.getApellidos() + "</option>");
                                         }
-                                    %>
-                                </select>
-                            </div>
-                        </div>
-                    </div>    
+                                        out.println("</select>");
+                                        out.println("</div>");
+                                        out.println("</div>");
+                                    }
+                                %>
 
-                    <input type="hidden" name="txtId" value="${usuario.getId()}">        
-                    <div class="contenedorBotonAgregar">
-                        <% 
-                            if (usuario != null && usuario.getId() != 0) {
-                                out.println("<input type='submit' name='btnAccion' value='Actualizar' class='btn btn-dark botonAgregar' style='margin-left: 10px;'>");
-                            }
-                            
-                        %>
-                        
+                                <%
+                                    if (conductorMenu == null && usuario == null && email == "" && tipoUsuario == null) {
+                                        out.println("<div class='row filaParaInput'>");
+
+                                        out.println("<div class='col-3 col-form-label etiquetaDeInput'>");
+                                        out.println("<label>Tipo de usuario : </label>");
+                                        out.println("</div>");
+
+                                        out.println("<div class='col-7' >");
+                                        out.println("<select name='Tipo' id='tipoUsuario' class='form-control'>");
+                                        out.println("<option value='1'>Conductor</option>");
+                                        out.println("<option value='2'>Agente</option>");
+                                        out.println("</select>");
+                                        out.println("</div>");
+
+                                        out.println("</div>");
+                                    }
+
+                                %>
+
+
+
+                                        
+                                <div class="contenedorBotonAgregar">
+                                    <%  
+                                        out.println("<input type='hidden' name='txtId' value=" + usuarioConductor.getId() + ">");
+                                        if ((usuario != null && usuario.getId() != 0) || (usuarioConductor != null && usuarioConductor.getConductor() != 0)) {
+                                            out.println("<input type='submit' name='btnAccion' value='Actualizar' class='btn btn-dark botonAgregar' style='margin-left: 10px;'>");
+                                        }
+
+                                        if (usuario != null && usuario.getId() != 0) {
+
+                                            out.println("<input type=" + "'submit'" + "name=" + "'btnAccion'" + " value=" + "'Limpiar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
+                                        } else if (tipoUsuario != null) {
+                                            out.println("<input type=" + "'submit'" + "  name=" + "'btnAccion'" + " value=" + "'Agregar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
+                                        } else if (usuarioConductor == null) {
+                                            out.println("<input type=" + "'submit'" + "  name=" + "'btnAccion'" + " value=" + "'Seleccionar Tipo'" + " class=" + "'btn btn-dark botonAgregar2'" + ">");
+                                        }
+
+                                    %>
+
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
+
+
 
 
         <div class="contenedorTabla">
             <div class="informacionDeTabla">
                 <table class="table table-striped-columns">
                     <thead>
-                        <tr class="table-dark" style="text-align: center">
-                            <th>ID</th>
-                            <th>Correo</th>
-                            <th>Agente</th>
-                            <th>Conductor</th>
-                            <th>Acciones</th>
-                        </tr>
+                        <%                            if (conductorMenu == null) {
+                                out.println("<tr class='table-dark' style='text-align: center'>");
+                                out.println("<th>ID</th>");
+                                out.println("<th>Correo</th>");
+                                out.println("<th>Agente</th>");
+                                out.println("<th>Conductor</th>");
+                                out.println("<th>Acciones</th>");
+                                out.println("</tr>");
+                            }
+                        %>
+
                     </thead>
                     <tbody>
                         <%
-                            UsuarioDAO usuarioDAO = new UsuarioDAO();
                             List<Usuario> usuarios = usuarioDAO.listarUsuarios();
-                            if (!usuarios.isEmpty()) {
+                            if (!usuarios.isEmpty() && conductorMenu == null) {
                                 out.println("<form action=" + "'ControladorUsuario'" + "method=" + "'POST'" + ">");
                                 for (Usuario item : usuarios) {
                                     String usuarioText = item.getConductorNombre() == null ? " " : item.getConductorNombre();
+                                    String agenteText = item.getAgenteNombre() == null ? " " : item.getAgenteNombre();
                                     out.println("<tr class=" + "'table-dark'" + ">");
 
                                     out.println("<td>" + item.getId() + "</td>");
                                     out.println("<td>" + item.getEmail() + "</td>");
-                                    out.println("<td>" + item.getAgenteNombre() + "</td>");
+                                    out.println("<td>" + agenteText + "</td>");
                                     out.println("<td>" + usuarioText + "</td>");
                                     out.println("<td class=" + "'columnaDeBotones'" + ">");
-                                        out.println("<div class=" + "'d-grid gap-2 d-md-block contenedorBotones'" + ">");
-                                            out.println("<a href='ControladorUsuario?registro=" + item.getId() + "&btnAccion=Seleccionar' class='btn btn-warning estiloEnlace' >Seleccionar</a>");
-                                            out.println("<a href='ControladorUsuario?registro=" + item.getId() + "&btnAccion=Eliminar' class='btn btn-danger estiloEnlace2' >Eliminar</a>");
-                                        out.println("</div>");
+                                    out.println("<div class=" + "'d-grid gap-2 d-md-block contenedorBotones'" + ">");
+                                    out.println("<a href='ControladorUsuario?registro=" + item.getId() + "&btnAccion=Seleccionar' class='btn btn-warning estiloEnlace' >Seleccionar</a>");
+                                    if (conductorMenu == null) {
+                                        out.println("<a href='ControladorUsuario?registro=" + item.getId() + "&btnAccion=Eliminar' class='btn btn-danger estiloEnlace2' >Eliminar</a>");
+                                    }
+
+                                    out.println("</div>");
                                     out.println("</td>");
                                     out.println("</tr>");
                                 }
