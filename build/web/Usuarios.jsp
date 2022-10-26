@@ -1,7 +1,7 @@
 <%-- 
     Document   : UserPage
     Created on : 27/09/2022, 07:42:06 PM
-    Author     : Admin
+    Author     : José Bobadilla
 --%>
 
 <%@page import="Modelos.UsuarioDAO"%>
@@ -319,7 +319,7 @@
                                         
                                 <div class="contenedorBotonAgregar">
                                     <%  
-                                        out.println("<input type='hidden' name='txtId' value=" + usuarioConductor.getId() + ">");
+                                        out.println("<input type='hidden' name='txtId' value=" + id + ">");
                                         if ((usuario != null && usuario.getId() != 0) || (usuarioConductor != null && usuarioConductor.getConductor() != 0)) {
                                             out.println("<input type='submit' name='btnAccion' value='Actualizar' class='btn btn-dark botonAgregar' style='margin-left: 10px;'>");
                                         }
