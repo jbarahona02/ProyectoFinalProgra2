@@ -124,6 +124,8 @@
     <body>
         <%
             Vehiculo vehiculo = (Vehiculo) request.getAttribute("vehiculo");
+            Vehiculo vehiculoEnSesion = (Vehiculo) request.getSession().getAttribute("vehiculo");
+
             String placa;
             String color;
             String linea;
@@ -143,7 +145,6 @@
                 marca = request.getParameter("marca") != null ? marca = request.getParameter("marca") : "";
                 conductorId = request.getParameter("conductor") != null ? Integer.valueOf(request.getParameter("conductor")) : 0;
             }
-
         %>
         <h1>Vehiculos</h1>
         <div class="contenedorFormulario">
@@ -151,7 +152,7 @@
                 <%                    
                     String error = request.getParameter("error");
                     String errorEliminar = request.getParameter("errorEliminar");
-                    
+                    String id = request.getParameter("id");
                     if (error != null) {
                         if (error.equals("placaRepetida")) {
                             out.println("<h1 class=" + "tituloAdvertencia" + ">La placa ingresada ya existe en el sistema</h1>");
@@ -224,8 +225,19 @@
 
                     <input type="hidden" name="txtId" value="${vehiculo.getId()}">        
                     <div class="contenedorBotonAgregar">
-                        <input type="submit" name="accion" value="Agregar" class="btn btn-dark botonAgregar">
-                        <input type="submit" name="accion" value="Actualizar" class="btn btn-dark botonAgregar" style="margin-left: 10px;">
+                        <%
+                            if (vehiculo != null) {
+                            
+                                out.println("<input type=" + "'submit'" + "name=" + "'accion'" + " value=" + "'Actualizar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
+                                
+                                out.println("<input type=" + "'submit'" + "name=" + "'accion'" + " value=" + "'Limpiar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
+
+                                out.println("<a class='btn btn-dark botonAgregar' href='ReporteSolvencia.jsp?id=" + id + "'>Reporte</a>");
+                            } else if (vehiculo == null) {
+                                out.println("<input type=" + "'submit'" + "  name=" + "'accion'" + " value=" + "'Agregar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
+                            }
+                        %>
+
                     </div>
                 </form>
             </div>
@@ -254,7 +266,7 @@
                                 <td>${vehiculo.getColor()}</td>
                                 <td>${vehiculo.getLinea()}</td>
                                 <td>${vehiculo.getMarca()}</td>
-                                <td>${vehiculo.getConductor()}</td>
+                                <td>${vehiculo.getNombreConductor()}</td>
                                 <td class="columnaDeBotones">
                                     <div class="d-grid gap-2 d-md-block contenedorBotones">
                                         <a class="btn btn-warning estiloEnlace" href="ControladorVehiculo?accion=Seleccionar&id=${vehiculo.getId()}">Seleccionar</a>

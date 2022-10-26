@@ -77,7 +77,7 @@
                             <a style="margin-right: 10px; border:none;" class="btn btn-outline-light"  onClick="newSite('ControladorMenuPrincipal?menu=Usuarios&conductorId=${usuario.getConductor()}')">Usuario</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
-                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" onClick="newSite('ControladorMenuPrincipal?menu=Vehiculos')">Vehículo</a>
+                            <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" onClick="newSite('ControladorMenuPrincipal?menu=VehiculosConductor&conductorId=${usuario.getConductor()}')">Vehículo</a>
                         </li>
                         <li class="nav-item elementosDeMenu">
                             <a style="margin-right: 10px; border:none;" class="btn btn-outline-light" onClick="newSite('ControladorMenuPrincipal?menu=Infracciones&conductorId=${usuario.getConductor()}')">Infracciones</a>

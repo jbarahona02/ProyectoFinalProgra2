@@ -129,14 +129,17 @@
             String dpi;
             String fechaNacimiento;
             String telefono;
+            int idA;
 
             if (agente != null) {
+                idA = agente.getId();
                 nombre = agente.getNombre();
                 apellidos = agente.getApellidos();
                 dpi = agente.getDpi();
                 fechaNacimiento = agente.getFechaNacimiento().toString();
                 telefono = agente.getTelefono();
             } else {
+                idA = request.getParameter("idA") != null ? Integer.parseInt(request.getParameter("idA")) : 0;
                 nombre = request.getParameter("nombre") != null ? nombre = request.getParameter("nombre") : "";
                 apellidos = request.getParameter("apellidos") != null ? apellidos = request.getParameter("apellidos") : "";
                 dpi = request.getParameter("dpi") != null ? dpi = request.getParameter("dpi") : "";
@@ -213,7 +216,7 @@
                         
                     </div>    
 
-                    <input type="hidden" name="txtId" value="${agente.getId()}">        
+                    <input type="hidden" name="txtId" value="<%=idA%>">        
                     <div class="contenedorBotonAgregar">
                         <input type="submit" name="accion" value="Agregar" class="btn btn-dark botonAgregar">
                         <input type="submit" name="accion" value="Actualizar" class="btn btn-dark botonAgregar" style="margin-left: 10px;">
