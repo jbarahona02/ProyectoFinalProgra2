@@ -229,49 +229,17 @@ public class UsuarioDAO {
         }
     }
 
-    public boolean validaInformation(int type, int id) {
-        String sql = "";
-        if (type == 1) {
-            sql = "SELECT id as TOTAL FROM vehiculo WHERE conductor = ?";
-        } else {
-            sql = "SELECT id as TOTAL FROM infraccion WHERE agent = ?";
-        }
-        System.out.println(id);
-
-        try {
-            connection = conexionDB.getConexion();
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
-            resultadoSentencia = preparedStatement.executeQuery();
-
-            int total = 0;
-            while (resultadoSentencia.next()) {
-                total = resultadoSentencia.getInt("id");
-            }
-            System.out.println(total);
-
-            return !(total == 0);
-        } catch (Exception e) {
-            return true;
-        }
-    }
 
     public String eliminarUsuario(int id) {
         String sql = "DELETE FROM usuario WHERE id = ?";
         try {
             int type = 0;
-            int idValida = 0;
             Usuario u = this.buscarUsuario(id);
             if (u != null) {
                 type = u.getConductor() != 0 ? 1 : 2;
-                idValida = type == 1 ? u.getConductor() : u.getAgente();
             }
 
             System.out.println(type);
-            if (this.validaInformation(type, idValida)) {
-                return "El usuario tiene información asociada";
-            }
-
             connection = conexionDB.getConexion();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);

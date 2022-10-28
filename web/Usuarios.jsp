@@ -246,7 +246,7 @@
                                         List<Agente> agentes = agenteDAO.buscarAgentes();
 
                                         String selectedEmpty = (agente == 0) ? "selected" : "";
-                                        out.println("<option value='0'" + selectedEmpty + " disabled>No hay infromación</option>");
+                                        out.println("<option value='0'" + selectedEmpty + " disabled>No hay información</option>");
 
                                         for (Agente item : agentes) {
                                             String selected = (agente == item.getId()) ? "selected" : "";

@@ -122,11 +122,26 @@ public class ControladorInfraccion extends HttpServlet {
         }
 
         if (accion.equals("EliminarDetalle")) {
+            List<Sancion> sancionesEnSession = (ArrayList<Sancion>) request.getSession().getAttribute(listSanciones);
+            
             Integer id = Integer.valueOf(request.getParameter("registro"));
+            Infraccion infraccion = infraccionDAO.buscarInfraccion(id);
+            
+            
             Integer idDetalle = Integer.valueOf(request.getParameter("registroDetalle"));
             infraccionDAO.eliminarInfraccionDetallePorId(idDetalle);
-            Infraccion infraccion = infraccionDAO.buscarInfraccion(id);
+            
+            int sancionId = infraccion.getDetalle().stream().filter(item -> item.getId() == idDetalle).findFirst().orElse(null).getSancion();
+            Sancion sancion = sancionesEnSession.stream().filter(item -> item.getId() == sancionId).findFirst().orElse(null);
+            int index = sancionesEnSession.indexOf(sancion);
+            System.out.println(index);
+            sancionesEnSession.remove(index);
+            
+            request.getSession().setAttribute(listSanciones, sancionesEnSession);
+           
+            infraccion = infraccionDAO.buscarInfraccion(id);
             request.getSession().setAttribute("infraccion", infraccion);
+            
             request.getRequestDispatcher("Infracciones.jsp?Vehiculo=" + infraccion.getVehiculo() + "&Agente=" + infraccion.getAgente() + "&id=" + infraccion.getId()).forward(request, response);
         }
 
