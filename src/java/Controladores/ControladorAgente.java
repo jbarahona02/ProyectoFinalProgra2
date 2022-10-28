@@ -97,7 +97,7 @@ public class ControladorAgente extends HttpServlet{
         }
 
         if (accion.equals("Actualizar")) {
-            
+                        
             String nombre = request.getParameter("txtNombre");
             String apellidos = request.getParameter("txtApellidos");
             String dpi = request.getParameter("txtDpi");
@@ -114,7 +114,7 @@ public class ControladorAgente extends HttpServlet{
             if (!valida) {
                 List<Agente> listaAgente = agenteDAO.buscarAgentes();
                 request.setAttribute("agentes", listaAgente);
-                request.getRequestDispatcher("Agentes.jsp?nombre=" + nombre + "&apellidos=" + apellidos + "&dpi=" + dpi + "&fechaNacimiento=" + fechaNacimiento + "&telefono=" + telefono + "&error=campos").forward(request, response);
+                request.getRequestDispatcher("Agentes.jsp?nombre=" + nombre + "&apellidos=" + apellidos + "&dpi=" + dpi + "&fechaNacimiento=" + fechaNacimiento + "&telefono=" + telefono +"&idA=" + id + "&error=campos").forward(request, response);
                 return;
             }
 
@@ -126,7 +126,7 @@ public class ControladorAgente extends HttpServlet{
                 if (error != "") {
                     List<Agente> listaAgente = agenteDAO.buscarAgentes();
                     request.setAttribute("agentes", listaAgente);
-                request.getRequestDispatcher("Agentes.jsp?nombre=" + nombre + "&apellidos=" + apellidos + "&dpi=" + dpi + "&fechaNacimiento=" + fechaNacimiento + "&telefono=" + telefono + "&error=dpiNoIgual").forward(request, response);
+                request.getRequestDispatcher("Agentes.jsp?nombre=" + nombre + "&apellidos=" + apellidos + "&dpi=" + dpi + "&fechaNacimiento=" + fechaNacimiento + "&telefono=" + telefono + "&idA=" + id +"&error=dpiNoIgual").forward(request, response);
                     return;
                 }
             }
@@ -134,7 +134,7 @@ public class ControladorAgente extends HttpServlet{
             if (error != "") {
                 List<Agente> listaAgente = agenteDAO.buscarAgentes();
                 request.setAttribute("agentes", listaAgente);
-                request.getRequestDispatcher("Agentes.jsp?nombre=" + nombre + "&apellidos=" + apellidos + "&dpi=" + dpi + "&fechaNacimiento=" + fechaNacimiento + "&telefono=" + telefono + "&error=campos").forward(request, response);
+                request.getRequestDispatcher("Agentes.jsp?nombre=" + nombre + "&apellidos=" + apellidos + "&dpi=" + dpi + "&fechaNacimiento=" + fechaNacimiento + "&telefono=" + telefono + "&idA=" + id + "&error=campos").forward(request, response);
                 return;
             }
             

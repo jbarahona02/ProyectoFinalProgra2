@@ -39,7 +39,16 @@ public class ControladorSancion extends HttpServlet{
         
         if (accion.equals("Agregar")) {
 
+            boolean validarAmount = (request.getParameter("txtAmount") != "");
             String descripcion = request.getParameter("txtDescripcion");
+
+            if (!validarAmount) {
+                List<Sancion> listaSanciones = sancionDAO.buscarSanciones();
+                request.setAttribute("sanciones", listaSanciones);
+                request.getRequestDispatcher("Sancion.jsp?descripcion=" + descripcion + "&amount=" + 0 + "&error=campos").forward(request, response);
+                return;
+            }
+            
             Double amount = Double.valueOf(request.getParameter("txtAmount"));
 
             String error = "";
@@ -97,7 +106,7 @@ public class ControladorSancion extends HttpServlet{
             if (!valida) {
                 List<Sancion> listaSanciones = sancionDAO.buscarSanciones();
                 request.setAttribute("sanciones", listaSanciones);
-                request.getRequestDispatcher("Sancion.jsp?descripcion=" + descripcion + "&amount=" + amount + "&error=campos").forward(request, response);
+                request.getRequestDispatcher("Sancion.jsp?descripcion=" + descripcion + "&amount=" + amount + "&idS=" + id + "&error=campos").forward(request, response);
                 return;
             }
 
@@ -105,7 +114,7 @@ public class ControladorSancion extends HttpServlet{
             if (error != "") {
                 List<Sancion> listaSanciones = sancionDAO.buscarSanciones();
                 request.setAttribute("sanciones", listaSanciones);
-                request.getRequestDispatcher("Sancion.jsp?descripcion=" + descripcion + "&amount=" + amount + "&error=campos").forward(request, response);
+                request.getRequestDispatcher("Sancion.jsp?descripcion=" + descripcion + "&amount=" + amount + "&idS=" + id +"&error=campos").forward(request, response);
                 return;
             }
 

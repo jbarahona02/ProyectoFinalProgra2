@@ -126,11 +126,14 @@
             Sancion sancion = (Sancion) request.getAttribute("sancion");
             String descripcion;
             Double amount;
+            int idS;
 
             if (sancion != null) {
+                idS = sancion.getId();
                 descripcion = sancion.getDescripcion();
                 amount = sancion.getAmount();
             } else {
+                idS = request.getParameter("idS") != null ? Integer.parseInt(request.getParameter("idS")) : 0;
                 descripcion = request.getParameter("descripcion") != null ? descripcion = request.getParameter("descripcion") : "";
                 amount = request.getParameter("amount") != null ? Double.valueOf(request.getParameter("amount")) : 0;
             }
@@ -171,12 +174,12 @@
                                 <label>Monto : </label>
                             </div>
                             <div class="col-8">
-                                <input type="text" class="form-control" name="txtAmount" value="<%=amount%>">
+                                <input type="number" class="form-control" name="txtAmount" value="<%=amount%>">
                             </div>
                         </div>
                     </div>    
 
-                    <input type="hidden" name="txtId" value="${sancion.getId()}">        
+                    <input type="hidden" name="txtId" value="<%=idS%>">        
                     <div class="contenedorBotonAgregar">
                         <input type="submit" name="accion" value="Agregar" class="btn btn-dark botonAgregar">
                         <input type="submit" name="accion" value="Actualizar" class="btn btn-dark botonAgregar" style="margin-left: 10px;">

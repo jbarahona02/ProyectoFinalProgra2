@@ -30,13 +30,15 @@ public class ControladorVehiculo extends HttpServlet{
      * @throws IOException if an I/O error occurs
      */
     VehiculoDAO vehiculoDAO = new VehiculoDAO();
+    Vehiculo vehiculo = new Vehiculo();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String accion = request.getParameter("accion");
 
-        int id =  (request.getParameter("txtId") != null && !request.getParameter("txtId").equals("")) ? Integer.valueOf(request.getParameter("txtId")) : 0;
+        int id = request.getParameter("txtId") != null && request.getParameter("txtId") != "" ? Integer.parseInt(request.getParameter("txtId")) : 0;
+      
         Integer conductorId = request.getParameter("Conductor") != null ? Integer.valueOf(request.getParameter("Conductor")) : 0;
         
         if (accion.equals("Agregar")) {
@@ -83,7 +85,9 @@ public class ControladorVehiculo extends HttpServlet{
         
         if (accion.equals("Seleccionar")) {
             Vehiculo vehiculoSeleccionado = vehiculoDAO.buscarVehiculo(Integer.parseInt(request.getParameter("id")));
+
             request.setAttribute("vehiculo", vehiculoSeleccionado);
+            request.setAttribute("vehiculoSeleccionado", vehiculoSeleccionado);
 
             List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
                 request.setAttribute("vehiculos", listaVehiculos);
@@ -99,11 +103,14 @@ public class ControladorVehiculo extends HttpServlet{
 
         if (accion.equals("Actualizar")) {
             
+            Vehiculo vehiculoSeleccionado2 = vehiculoDAO.buscarVehiculo(id);
+            request.setAttribute("vehiculoSeleccionado", vehiculoSeleccionado2);
+
             String placa = request.getParameter("txtPlaca");
             String color = request.getParameter("txtColor");
             String linea = request.getParameter("txtLinea");
             String marca = request.getParameter("txtMarca");
-
+            
             String error = "";
             boolean valida = (placa != null && !placa.trim().equals(""))
                     && (color != null && !color.trim().equals(""))
@@ -113,19 +120,18 @@ public class ControladorVehiculo extends HttpServlet{
             if (!valida) {
                 List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
                 request.setAttribute("vehiculos", listaVehiculos);
-                request.getRequestDispatcher("Vehiculos.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&error=campos").forward(request, response);
+                request.getRequestDispatcher("Vehiculos.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&idV=" + id +"&error=campos").forward(request, response);
                 return;
             }
 
             Vehiculo vehiculoSeleccionado = vehiculoDAO.validarVehiculoConPlaca(placa);
             boolean placaDelVehiculo = placa.equals(vehiculoSeleccionado.getPlaca());
-
             if (!placaDelVehiculo) {
                 error = "Placa no es igual a la del vehiculo seleccionado";
                 if (error != "") {
                     List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
                     request.setAttribute("vehiculos", listaVehiculos);
-                    request.getRequestDispatcher("Vehiculos.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&error=placaNoIgual").forward(request, response);
+                    request.getRequestDispatcher("Vehiculos.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&idV=" + id +"&error=placaNoIgual").forward(request, response);
                     return;
                 }
             }
@@ -133,7 +139,7 @@ public class ControladorVehiculo extends HttpServlet{
             if (error != "") {
                 List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
                 request.setAttribute("vehiculos", listaVehiculos);
-                request.getRequestDispatcher("Vehiculos.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&error=campos").forward(request, response);
+                request.getRequestDispatcher("Vehiculos.jsp?placa=" + placa + "&color=" + color + "&linea=" + linea + "&marca=" + marca + "&conductor" + conductorId + "&idV=" + id +"&error=campos").forward(request, response);
                 return;
             }
 

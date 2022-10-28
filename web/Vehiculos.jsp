@@ -124,21 +124,24 @@
     <body>
         <%
             Vehiculo vehiculo = (Vehiculo) request.getAttribute("vehiculo");
-            Vehiculo vehiculoEnSesion = (Vehiculo) request.getSession().getAttribute("vehiculo");
+            Vehiculo vehiculoSeleccionado = (Vehiculo) request.getAttribute("vehiculoSeleccionado");
 
             String placa;
             String color;
             String linea;
             String marca;
             Integer conductorId;
+            int idV;
 
             if (vehiculo != null) {
+                idV = vehiculo.getId();
                 placa = vehiculo.getPlaca();
                 color = vehiculo.getColor();
                 linea = vehiculo.getLinea();
                 marca = vehiculo.getMarca();
                 conductorId = vehiculo.getConductor();
             } else {
+                idV = request.getParameter("idV") != null ? Integer.parseInt(request.getParameter("idV")) : 0;
                 placa = request.getParameter("placa") != null ? placa = request.getParameter("placa") : "";
                 color = request.getParameter("color") != null ? color = request.getParameter("color") : "";
                 linea = request.getParameter("linea") != null ? linea = request.getParameter("linea") : "";
@@ -152,7 +155,6 @@
                 <%                    
                     String error = request.getParameter("error");
                     String errorEliminar = request.getParameter("errorEliminar");
-                    String id = request.getParameter("id");
                     if (error != null) {
                         if (error.equals("placaRepetida")) {
                             out.println("<h1 class=" + "tituloAdvertencia" + ">La placa ingresada ya existe en el sistema</h1>");
@@ -223,10 +225,10 @@
                         </div>
                     </div>    
 
-                    <input type="hidden" name="txtId" value="${vehiculo.getId()}">        
+                    <input type="hidden" name="txtId" value="<%=idV%>">        
                     <div class="contenedorBotonAgregar">
                         <%
-                            if (vehiculo != null) {
+                            if (vehiculoSeleccionado != null) {
                             
                                 out.println("<input type=" + "'submit'" + "name=" + "'accion'" + " value=" + "'Actualizar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
                                 
@@ -234,7 +236,7 @@
 
                                 out.println("<input type=" + "'submit'" + "name=" + "'accion'" + " value=" + "'Reporte'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
 
-                            } else if (vehiculo == null) {
+                            } else if (vehiculoSeleccionado == null) {
                                 out.println("<input type=" + "'submit'" + "  name=" + "'accion'" + " value=" + "'Agregar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
                             }
                         %>
