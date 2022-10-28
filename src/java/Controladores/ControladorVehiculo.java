@@ -105,6 +105,7 @@ public class ControladorVehiculo extends HttpServlet{
             
             Vehiculo vehiculoSeleccionado2 = vehiculoDAO.buscarVehiculo(id);
             request.setAttribute("vehiculoSeleccionado", vehiculoSeleccionado2);
+            request.setAttribute("vehiculo", vehiculoSeleccionado2);
 
             String placa = request.getParameter("txtPlaca");
             String color = request.getParameter("txtColor");
@@ -146,6 +147,8 @@ public class ControladorVehiculo extends HttpServlet{
             int resp = vehiculoDAO.actualizarVehiculo(id, placa, color, linea, marca, conductorId);
             List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculos();
             request.setAttribute("vehiculos", listaVehiculos);
+            request.setAttribute("vehiculoSeleccionado", null);
+            request.setAttribute("vehiculo", null);
             request.getRequestDispatcher("Vehiculos.jsp").forward(request, response);
 
         }
