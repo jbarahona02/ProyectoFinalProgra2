@@ -138,7 +138,6 @@
             int agente;
             int conductor;
             String tipoUsuario = (String) request.getSession().getAttribute("tipoUsuario");
-            System.out.println("tipoUsuario pantalla " + tipoUsuario);
             int id = 0;
 
             if (usuario != null) {
@@ -159,7 +158,6 @@
 
             Usuario usuarioConductor = null;
             if (idUser != null && conductorMenu != null) {
-                System.out.println("ID EN PANTALLA " + idUser);
                 usuarioConductor = usuarioDAO.buscarUsuario(idUser);
                 id = usuarioConductor.getId();
                 usuario = null;
@@ -210,7 +208,6 @@
                                             disabledUpdate = "disabled";
                                         }
                                         if (conductorMenu != null) {
-                                            System.out.println(usuarioConductor.getEmail());
                                             email = usuarioConductor.getEmail();
                                         }
                                         out.println("<div class='col-8'>");

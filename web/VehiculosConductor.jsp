@@ -233,7 +233,7 @@
                                                             
                                 out.println("<input type=" + "'submit'" + "name=" + "'accion'" + " value=" + "'Limpiar'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
 
-                                out.println("<a class='btn btn-dark botonAgregar' href='ReporteSolvencia.jsp?id=" + id + "'>Reporte</a>");
+                                out.println("<input type=" + "'submit'" + "name=" + "'accion'" + " value=" + "'Reporte'" + " class=" + "'btn btn-dark botonAgregar'" + ">");
                             } else if (vehiculo == null) {
                             }
                         %>

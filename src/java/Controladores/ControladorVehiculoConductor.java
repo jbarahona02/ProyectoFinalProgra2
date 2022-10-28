@@ -153,6 +153,16 @@ public class ControladorVehiculoConductor extends HttpServlet{
             request.setAttribute("vehiculos", listaVehiculos);
             request.getRequestDispatcher("VehiculosConductor.jsp").forward(request, response);
         }
+        
+        if (accion.equals("Reporte")){
+            List<Vehiculo> listaVehiculos = vehiculoDAO.buscarVehiculoConInfraciones(id);
+            if(listaVehiculos == null){
+                request.getRequestDispatcher("ReporteSolvente.jsp?id=" + id).forward(request, response);
+            }else{
+                request.getRequestDispatcher("ReporteSolvencia.jsp?id=" + id).forward(request, response);
+
+            }
+        }
 
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */

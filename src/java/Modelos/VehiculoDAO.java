@@ -203,6 +203,35 @@ public class VehiculoDAO {
         return "";
     }
     
-    
+    public List<Vehiculo> buscarVehiculoConInfraciones(int id) {
+        List<Vehiculo> vehiculos = new ArrayList<>();
+        String query = "SELECT\n" +
+"		 vehiculo.id AS Id\n" +
+"	FROM\n" +
+"		 vehiculo vehiculo \n" +
+"         INNER JOIN infraccion infraccion ON vehiculo.id = infraccion.vehiculo \n" +
+"          Where vehiculo.id = ? && infraccion.estado = 0;";
+        try {
+            connection = conexionDB.getConexion();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            resultadoSentencia = preparedStatement.executeQuery();
+
+            while (resultadoSentencia.next()) {
+                Vehiculo vehiculo = new Vehiculo();
+                vehiculo.setId(resultadoSentencia.getInt("id"));
+                vehiculos.add(vehiculo);
+            }
+            System.out.print(vehiculos);
+            if(vehiculos.isEmpty()){
+                return null;
+            }
+
+            return vehiculos;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
     
 }
